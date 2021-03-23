@@ -1,0 +1,120 @@
+C166 COMPILER V7.00, DIFFERENTIAL_CONTROL                                                  04/01/2020 13:45:20 PAGE 1   
+
+
+C166 COMPILER V7.00, COMPILATION OF MODULE DIFFERENTIAL_CONTROL
+OBJECT MODULE PLACED IN differential_control.obj
+COMPILER INVOKED BY: H:\KEILC166\C166\BIN\C166.EXE source\differential_control.c MODV2 BROWSE INCDIR(.\source;.\lib) MOD
+                    -V2 DEBUG PRINT(.\differential_control.lst) OBJECT(differential_control.obj) 
+
+ stmt lvl     source
+
+    1         /********************************************************************
+    2         author: dowson
+    3         date:20200117
+    4         part name: differential_control.c  
+    5         part function descreption:Four independent wheels for differential 
+    6                 steering and movement control.
+    7         ********************************************************************/
+    8         #include "MAIN.h"
+    9         #include "vehicle_control.h"
+   10         #include "steering.h"
+   11         #include "speed_control.h"
+   12         #include "remote.h"
+   13         #include "pid_controler.h"
+   14         #include "breaking_control.h"
+   15         #include "differential_control.h"
+   16         
+   17         extern struct vehicle vehicle_rcv;
+   18         extern struct pid_struct pid;
+   19         extern struct pid_struct pidlf;
+   20         extern struct pid_struct pidlb;
+   21         extern struct pid_struct pidrf;
+   22         extern struct pid_struct pidrb;
+   23         
+   24         int d_wheel_speed1,d_wheel_speed2;
+   25         
+   26         int differential_control(sword target_wheel_speed,int k,char mode,unsigned char gear)
+   27         {
+   28  1              int wheel_speed1,wheel_speed2;
+   29  1      
+   30  1              switch(mode){
+   31  2              
+   32  2                      case 1:    //左右差速,即左边轮子和右边轮子转速相反
+   33  2                              if(gear == 1) //此时表示为左轮转向为正，右轮相反 ,左轮需要乘以比例因子 
+   34  2                              {
+   35  3                                      wheel_speed1 = target_wheel_speed*k;   //左轮
+   36  3                                      wheel_speed2 = (~(target_wheel_speed)+1);  //右轮
+   37  3                                      d_wheel_speed1=wheel_speed1;
+   38  3                                      d_wheel_speed2=wheel_speed2;
+   39  3                              }
+   40  2                              if(gear == 3) //此时表示为左轮转向为反，右轮相反，右轮需要乘以比例因子 
+   41  2                              {
+   42  3                                      wheel_speed1 =  (~(target_wheel_speed)+1);  //左轮
+   43  3                                      wheel_speed2 =  target_wheel_speed*k; //右轮
+   44  3                                      d_wheel_speed1=wheel_speed1;
+   45  3                                      d_wheel_speed2=wheel_speed2;                                    
+   46  3                              }else if(gear == 2)return 0;
+   47  2                                      //计算对应转矩值
+   48  2                              pid_init(&pidlf,wheel_speed1,(sword)vehicle_rcv.lfw.rpm,0.6f,0.0f,0.1f,LFC_310,0.01f);                  
+   49  2                              pid_init(&pidrf,wheel_speed2,(sword)vehicle_rcv.rfw.rpm,0.6f,0.0f,0.1f,RFC_330,0.01f);
+   50  2                              pid_init(&pidlb,wheel_speed1,(sword)vehicle_rcv.lbw.rpm,0.6f,0.0f,0.1f,LBC_320,0.01f);
+   51  2                              pid_init(&pidrb,wheel_speed2,(sword)vehicle_rcv.rbw.rpm,0.6f,0.0f,0.1f,RBC_340,0.01f);  
+   52  2      
+   53  2                              send_torque_control(gear,pid_calculate(&pidlf),0x1,pidlf.can_id,0);
+   54  2                              send_torque_control(gear,pid_calculate(&pidrf),0x1,pidrf.can_id,0);
+C166 COMPILER V7.00, DIFFERENTIAL_CONTROL                                                  04/01/2020 13:45:20 PAGE 2   
+
+   55  2                              send_torque_control(gear,pid_calculate(&pidlb),0x1,pidlb.can_id,0);
+   56  2                              send_torque_control(gear,pid_calculate(&pidrb),0x1,pidrb.can_id,0);     
+   57  2                      break;
+   58  2                      case 3:    //前后差速，即前轮和后轮转向相反
+   59  2                              if(gear == 1) //此时表示为后轮转向为正，前轮相反，同速 
+   60  2                              {
+   61  3                                      wheel_speed1 = target_wheel_speed*k;//后轮
+   62  3                                      wheel_speed2 = (~(target_wheel_speed)+1);  //前轮                                       
+   63  3                              }
+   64  2                              if(gear == 3) //此时表示为后轮转向为反，前轮相反，同速 
+   65  2                              {
+   66  3                                      wheel_speed1 =  (~(target_wheel_speed)+1);  //后轮
+   67  3                                      wheel_speed2 =  target_wheel_speed*k; //前轮                            
+   68  3                              }else if(gear == 2)return 0;
+   69  2                              pid_init(&pidlf,wheel_speed2,(sword)vehicle_rcv.lfw.rpm,0.6f,0.0f,0.1f,LFC_310,0.01f);
+   70  2                              pid_init(&pidrf,wheel_speed2,(sword)vehicle_rcv.rfw.rpm,0.6f,0.0f,0.1f,RFC_330,0.01f);
+   71  2                              pid_init(&pidlb,wheel_speed1,(sword)vehicle_rcv.lbw.rpm,0.6f,0.0f,0.1f,LBC_320,0.01f);
+   72  2                              pid_init(&pidrb,wheel_speed1,(sword)vehicle_rcv.rbw.rpm,0.6f,0.0f,0.1f,RBC_340,0.01f);  
+   73  2      
+   74  2                              send_torque_control(gear,pid_calculate(&pidlf),0x1,pidlf.can_id,0);
+   75  2                              send_torque_control(gear,pid_calculate(&pidrf),0x1,pidrf.can_id,0);
+   76  2                              send_torque_control(gear,pid_calculate(&pidlb),0x1,pidlb.can_id,0);
+   77  2                              send_torque_control(gear,pid_calculate(&pidrb),0x1,pidrb.can_id,0);     
+   78  2                      break;
+   79  2              }
+   80  1              return 0;
+   81  1      }
+   82         
+   83         
+   84         
+   85         
+   86         
+   87         
+
+
+MODULE INFORMATION:   INITIALIZED  UNINITIALIZED
+  CODE SIZE        =        1162     --------
+  NEAR-CONST SIZE  =    --------     --------
+  FAR-CONST SIZE   =    --------     --------
+  HUGE-CONST SIZE  =    --------     --------
+  XHUGE-CONST SIZE =    --------     --------
+  NEAR-DATA SIZE   =           4     --------
+  FAR-DATA SIZE    =    --------     --------
+  XHUGE-DATA SIZE  =    --------     --------
+  IDATA-DATA SIZE  =    --------     --------
+  SDATA-DATA SIZE  =    --------     --------
+  BDATA-DATA SIZE  =    --------     --------
+  HUGE-DATA SIZE   =    --------     --------
+  BIT SIZE         =    --------     --------
+  INIT'L SIZE      =    --------     --------
+END OF MODULE INFORMATION.
+
+
+C166 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

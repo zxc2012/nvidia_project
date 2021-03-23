@@ -1,0 +1,603 @@
+C166 COMPILER V7.00, MC33993                                                               03/24/2015 22:16:05 PAGE 1   
+
+
+C166 COMPILER V7.00, COMPILATION OF MODULE MC33993
+OBJECT MODULE PLACED IN MC33993.OBJ
+COMPILER INVOKED BY: E:\engineering software\Keil\C166\BIN\C166.EXE MC33993.C MODV2 BROWSE MODV2 DEBUG
+
+ stmt lvl     source
+
+    1         //****************************************************************************
+    2         // 文件名: MC33993.C
+    3         // 功  能: 
+    4         // 作  者: 刘佳
+    5         // 版  本: V1.0
+    6         // 日  期: 2008.06.21
+    7         // 修  订:
+    8         // 说  明：
+    9         //****************************************************************************
+   10         
+   11         //****************************************************************************
+   12         // @Project Includes
+   13         //****************************************************************************
+   14         
+   15         #include "MAIN.H"
+   16         
+   17         //****************************************************************************
+   18         // @Function      ubyte Set_Command(unsigned char setbit) 
+   19         //
+   20         //----------------------------------------------------------------------------
+   21         // @Description   设置SP接电源or接GND
+   22         //
+   23         //----------------------------------------------------------------------------
+   24         // @Returnvalue   
+   25         //
+   26         //----------------------------------------------------------------------------
+   27         // @Parameters    setbit    SPn,setbit<=8
+   28         //
+   29         //----------------------------------------------------------------------------
+   30         // @Date          2008-6-21      by liujia
+   31         //
+   32         //****************************************************************************
+   33         void Set_Command(ubyte setbit_C_H,ubyte setbit_C_L,ubyte CS)
+   34         {
+   35  1          if(CS==1)
+   36  1              {
+   37  2              CS_MC33993_1 = 1;
+   38  2      
+   39  2          delay(5);
+   40  2              CS_MC33993_1 = 0;                                               //片选信号激活（‘0’有效）
+   41  2      
+   42  2              delay(5);
+   43  2              
+   44  2              U2C0_SSC_vSendData(0x01);                               //command                                       
+*** WARNING C140 IN LINE 44 OF MC33993.C: 'U2C0_SSC_vSendData' undefined; assuming 'extern int U2C0_SSC_vSendData()'
+   45  2              while(!U2C0_SSC_ubTxDataReady());                                               
+*** WARNING C140 IN LINE 45 OF MC33993.C: 'U2C0_SSC_ubTxDataReady' undefined; assuming 'extern int U2C0_SSC_ubTxDataRead
+             -y()'
+   46  2              
+   47  2              U2C0_SSC_vSendData(setbit_C_H); 
+   48  2              while(!U2C0_SSC_ubTxDataReady());                                                       
+   49  2              
+   50  2              U2C0_SSC_vSendData(setbit_C_L);                 //setbit:1:connect to Bat;  0:connect to GND
+   51  2              while(!U2C0_SSC_ubTxDataReady());
+   52  2                                                                                              
+C166 COMPILER V7.00, MC33993                                                               03/24/2015 22:16:05 PAGE 2   
+
+   53  2              delay(120);
+   54  2              CS_MC33993_1 = 1;                                               
+   55  2      
+   56  2              delay(2);
+   57  2              }
+   58  1      
+   59  1              if(CS==2)
+   60  1              {
+   61  2              CS_MC33993_2 = 1;
+   62  2      
+   63  2          delay(5);
+   64  2              CS_MC33993_2 = 0;                                               //片选信号激活（‘0’有效）
+   65  2      
+   66  2              delay(5);
+   67  2              
+   68  2              U2C0_SSC_vSendData(0x01);                               //command                                       
+   69  2              while(!U2C0_SSC_ubTxDataReady());                                               
+   70  2              
+   71  2              U2C0_SSC_vSendData(setbit_C_H); 
+   72  2              while(!U2C0_SSC_ubTxDataReady());                                                       
+   73  2              
+   74  2              U2C0_SSC_vSendData(setbit_C_L);                 //setbit:1:connect to Bat;  0:connect to GND
+   75  2              while(!U2C0_SSC_ubTxDataReady());
+   76  2                                                                                              
+   77  2              delay(120);
+   78  2              CS_MC33993_2 = 1;                                               
+   79  2      
+   80  2              delay(2);
+   81  2              }
+   82  1      }
+   83         //****************************************************************************
+   84         // @Function      ubyte Wake_inter_SP(unsigned char setbit) 
+   85         //
+   86         //----------------------------------------------------------------------------
+   87         // @Description   唤醒及中断位产生
+   88         //
+   89         //----------------------------------------------------------------------------
+   90         // @Returnvalue   
+   91         //
+   92         //----------------------------------------------------------------------------
+   93         // @Parameters    setbit    SPn,setbit<=8
+   94         //
+   95         //----------------------------------------------------------------------------
+   96         // @Date          2008-6-21      by liujia
+   97         //
+   98         //****************************************************************************
+   99         void SP_Wake_inter(unsigned char setbit_H,unsigned char setbit_L)
+  100         {
+  101  1              CS_MC33993_1 = 1;
+  102  1      
+  103  1              delay(5);
+  104  1              CS_MC33993_1 = 0;                                               //片选信号激活（‘0’有效）
+  105  1      
+  106  1              delay(5);
+  107  1              
+  108  1              U2C0_SSC_vSendData(0x02);                                   //command
+  109  1              while(!U2C0_SSC_ubTxDataReady());
+  110  1              
+  111  1              U2C0_SSC_vSendData(setbit_H);                       //setbit_H:没用     
+  112  1              while(!U2C0_SSC_ubTxDataReady());
+  113  1              
+  114  1              U2C0_SSC_vSendData(setbit_L);                       //setbit:1:enable
+C166 COMPILER V7.00, MC33993                                                               03/24/2015 22:16:05 PAGE 3   
+
+  115  1              while(!U2C0_SSC_ubTxDataReady());
+  116  1      
+  117  1              delay(120);
+  118  1              CS_MC33993_1 = 1;                                               
+  119  1      
+  120  1              delay(2);                
+  121  1       }
+  122         //****************************************************************************
+  123         // @Function      ubyte Wake_inter_SG(unsigned char setbit) 
+  124         //
+  125         //----------------------------------------------------------------------------
+  126         // @Description   唤醒及中断位产生
+  127         //
+  128         //----------------------------------------------------------------------------
+  129         // @Returnvalue   
+  130         //
+  131         //----------------------------------------------------------------------------
+  132         // @Parameters    setbit    SGn,setbit<=16
+  133         //
+  134         //----------------------------------------------------------------------------
+  135         // @Date          2008-6-21      by liujia
+  136         //
+  137         //****************************************************************************
+  138         void SG_Wake_inter(unsigned char setbit_H,unsigned char setbit_L)
+  139         {
+  140  1      
+  141  1              CS_MC33993_1 = 1;
+  142  1      
+  143  1              delay(5);
+  144  1              CS_MC33993_1 = 0;                                               //片选信号激活（‘0’有效）
+  145  1      
+  146  1              delay(5);
+  147  1      
+  148  1              U2C0_SSC_vSendData(0x03);                                   //command
+  149  1              while(!U2C0_SSC_ubTxDataReady());
+  150  1              
+  151  1              U2C0_SSC_vSendData(setbit_H);                       //setbit:  1:enable
+  152  1              while(!U2C0_SSC_ubTxDataReady());
+  153  1              
+  154  1              U2C0_SSC_vSendData(setbit_L);                       //setbit:  1:enable
+  155  1              while(!U2C0_SSC_ubTxDataReady());
+  156  1      
+  157  1              delay(120);
+  158  1              CS_MC33993_1 = 1;                                               
+  159  1      
+  160  1              delay(2);       
+  161  1      
+  162  1       }
+  163         //****************************************************************************
+  164         // @Function      ubyte Wetting_Current_SP(unsigned char setbit) 
+  165         //
+  166         //----------------------------------------------------------------------------
+  167         // @Description   湿性电流设置
+  168         //
+  169         //----------------------------------------------------------------------------
+  170         // @Returnvalue   
+  171         //
+  172         //----------------------------------------------------------------------------
+  173         // @Parameters    setbit    SPn,setbit<=8
+  174         //
+  175         //----------------------------------------------------------------------------
+  176         // @Date          2008-6-21      by liujia
+C166 COMPILER V7.00, MC33993                                                               03/24/2015 22:16:05 PAGE 4   
+
+  177         //
+  178         //****************************************************************************
+  179         void SP_Wetting_Current(unsigned char setbit_H,unsigned char setbit_L)
+  180         {
+  181  1      
+  182  1              CS_MC33993_1 = 1;
+  183  1      
+  184  1              delay(5);
+  185  1              CS_MC33993_1 = 0;                                               //片选信号激活（‘0’有效）
+  186  1      
+  187  1              delay(5);
+  188  1      
+  189  1              U2C0_SSC_vSendData(0x04);                                   //command
+  190  1              while(!U2C0_SSC_ubTxDataReady());
+  191  1              
+  192  1              U2C0_SSC_vSendData(setbit_H);                       //setbit_H:无用  
+  193  1              while(!U2C0_SSC_ubTxDataReady());
+  194  1              
+  195  1              U2C0_SSC_vSendData(setbit_L);                       //setbit:  1:16mA 0:2mA
+  196  1              while(!U2C0_SSC_ubTxDataReady());
+  197  1      
+  198  1              delay(120);
+  199  1              CS_MC33993_1 = 1;                                               
+  200  1      
+  201  1              delay(2);
+  202  1      
+  203  1       }
+  204         //****************************************************************************
+  205         // @Function      ubyte Wetting_Current_SP(unsigned char setbit) 
+  206         //
+  207         //----------------------------------------------------------------------------
+  208         // @Description   湿性电流设置
+  209         //
+  210         //----------------------------------------------------------------------------
+  211         // @Returnvalue   
+  212         //
+  213         //----------------------------------------------------------------------------
+  214         // @Parameters    setbit    SPn,setbit<=16
+  215         //
+  216         //----------------------------------------------------------------------------
+  217         // @Date          2008-6-21      by liujia
+  218         //
+  219         //****************************************************************************
+  220         void SG_Wetting_Current(unsigned char setbit_H,unsigned char setbit_L,ubyte CS)
+  221         {
+  222  1              if(CS==1)
+  223  1         {
+  224  2              CS_MC33993_1 = 1;
+  225  2      
+  226  2              delay(5);
+  227  2              CS_MC33993_1 = 0;                                               //片选信号激活（‘0’有效）
+  228  2      
+  229  2              delay(5);
+  230  2      
+  231  2              U2C0_SSC_vSendData(0x05);                                   //command
+  232  2              while(!U2C0_SSC_ubTxDataReady());
+  233  2          
+  234  2              U2C0_SSC_vSendData(setbit_H);                       //setbit:  1:16mA 0:2mA
+  235  2              while(!U2C0_SSC_ubTxDataReady());
+  236  2          
+  237  2              U2C0_SSC_vSendData(setbit_L);                       //setbit:  1:16mA 0:2mA
+  238  2              while(!U2C0_SSC_ubTxDataReady());
+C166 COMPILER V7.00, MC33993                                                               03/24/2015 22:16:05 PAGE 5   
+
+  239  2      
+  240  2              delay(120);
+  241  2              CS_MC33993_1 = 1;                                               
+  242  2      
+  243  2              delay(2);
+  244  2                 }
+  245  1      
+  246  1                      if(CS==2)
+  247  1         {
+  248  2              CS_MC33993_2 = 1;
+  249  2      
+  250  2              delay(5);
+  251  2              CS_MC33993_2 = 0;                                               //片选信号激活（‘0’有效）
+  252  2      
+  253  2              delay(5);
+  254  2      
+  255  2              U2C0_SSC_vSendData(0x05);                                   //command
+  256  2              while(!U2C0_SSC_ubTxDataReady());
+  257  2          
+  258  2              U2C0_SSC_vSendData(setbit_H);                       //setbit:  1:16mA 0:2mA
+  259  2              while(!U2C0_SSC_ubTxDataReady());
+  260  2          
+  261  2              U2C0_SSC_vSendData(setbit_L);                       //setbit:  1:16mA 0:2mA
+  262  2              while(!U2C0_SSC_ubTxDataReady());
+  263  2      
+  264  2              delay(120);
+  265  2              CS_MC33993_2 = 1;                                               
+  266  2      
+  267  2              delay(2);
+  268  2                 }
+  269  1       }
+  270         //****************************************************************************
+  271         // @Function      ubyte Wetting_Current_timer_SP(unsigned char setbit) 
+  272         //
+  273         //----------------------------------------------------------------------------
+  274         // @Description   湿性电流定时设置
+  275         //
+  276         //----------------------------------------------------------------------------
+  277         // @Returnvalue   
+  278         //
+  279         //----------------------------------------------------------------------------
+  280         // @Parameters    setbit    SPn,setbit<=8
+  281         //
+  282         //----------------------------------------------------------------------------
+  283         // @Date          2008-6-21      by liujia
+  284         //
+  285         //****************************************************************************
+  286         void SP_Wetting_Current_timer(unsigned char setbit_H,unsigned char setbit_L)
+  287         {
+  288  1      
+  289  1              CS_MC33993_1 = 1;
+  290  1      
+  291  1              delay(5);
+  292  1              CS_MC33993_1 = 0;                                               //片选信号激活（‘0’有效）
+  293  1      
+  294  1              delay(5);
+  295  1      
+  296  1              U2C0_SSC_vSendData(0x07);                                   //command
+  297  1              while(!U2C0_SSC_ubTxDataReady());
+  298  1              
+  299  1              U2C0_SSC_vSendData(setbit_H);                       //setbit:  1:enable 20ms
+  300  1              while(!U2C0_SSC_ubTxDataReady());
+C166 COMPILER V7.00, MC33993                                                               03/24/2015 22:16:05 PAGE 6   
+
+  301  1              
+  302  1              U2C0_SSC_vSendData(setbit_L);                       //setbit:  1:enable 20ms
+  303  1              while(!U2C0_SSC_ubTxDataReady());
+  304  1      
+  305  1              delay(120);
+  306  1              CS_MC33993_1 = 1;                                                       
+  307  1      
+  308  1              delay(2);
+  309  1      
+  310  1       }
+  311         //****************************************************************************
+  312         // @Function      ubyte Wetting_Current_timer_SG(unsigned char setbit) 
+  313         //
+  314         //----------------------------------------------------------------------------
+  315         // @Description   湿性电流定时设置
+  316         //
+  317         //----------------------------------------------------------------------------
+  318         // @Returnvalue   
+  319         //
+  320         //----------------------------------------------------------------------------
+  321         // @Parameters    setbit    SPn,setbit<=16
+  322         //
+  323         //----------------------------------------------------------------------------
+  324         // @Date          2008-6-21      by liujia
+  325         //
+  326         //****************************************************************************
+  327         void SG_Wetting_Current_timer(unsigned char setbit_H,unsigned char setbit_L)
+  328         {
+  329  1      
+  330  1              CS_MC33993_1 = 1;
+  331  1      
+  332  1              delay(5);
+  333  1              CS_MC33993_1 = 0;                                               //片选信号激活（‘0’有效）
+  334  1      
+  335  1              delay(5);
+  336  1      
+  337  1              U2C0_SSC_vSendData(0x08);                                   //command
+  338  1              while(!U2C0_SSC_ubTxDataReady());
+  339  1              
+  340  1              U2C0_SSC_vSendData(setbit_H);                       //setbit:  1:enable 20ms
+  341  1              while(!U2C0_SSC_ubTxDataReady());
+  342  1              
+  343  1              U2C0_SSC_vSendData(setbit_L);                       //setbit:  1:enable 20ms
+  344  1              while(!U2C0_SSC_ubTxDataReady());
+  345  1      
+  346  1              delay(120);
+  347  1              CS_MC33993_1 = 1;                                               
+  348  1      
+  349  1              delay(2);
+  350  1      
+  351  1       }
+  352         //****************************************************************************
+  353         // @Function      ubyte Tri_state_SP(unsigned char setbit) 
+  354         //
+  355         //----------------------------------------------------------------------------
+  356         // @Description   高阻设置
+  357         //
+  358         //----------------------------------------------------------------------------
+  359         // @Returnvalue   
+  360         //
+  361         //----------------------------------------------------------------------------
+  362         // @Parameters    setbit    SPn,setbit<=16
+C166 COMPILER V7.00, MC33993                                                               03/24/2015 22:16:05 PAGE 7   
+
+  363         //
+  364         //----------------------------------------------------------------------------
+  365         // @Date          2008-6-21      by liujia
+  366         //
+  367         //****************************************************************************
+  368         void SP_Tri_state(unsigned char setbit_H,unsigned char setbit_L,ubyte CS)
+  369         {
+  370  1               if(CS==1)
+  371  1         {
+  372  2              CS_MC33993_1 = 1;
+  373  2      
+  374  2              delay(5);
+  375  2              CS_MC33993_1 = 0;                                               //片选信号激活（‘0’有效）
+  376  2      
+  377  2              delay(5);
+  378  2      
+  379  2              U2C0_SSC_vSendData(0x09);                                   //command
+  380  2              while(!U2C0_SSC_ubTxDataReady());
+  381  2              
+  382  2              U2C0_SSC_vSendData(setbit_H);                       //setbit:  1:高阻
+  383  2              while(!U2C0_SSC_ubTxDataReady());
+  384  2              
+  385  2              U2C0_SSC_vSendData(setbit_L);                       //setbit:  1:高阻
+  386  2              while(!U2C0_SSC_ubTxDataReady());
+  387  2              
+  388  2              delay(120);
+  389  2              CS_MC33993_1 = 1;                                               
+  390  2      
+  391  2              delay(2);
+  392  2                      }
+  393  1      
+  394  1                       if(CS==2)
+  395  1         {
+  396  2              CS_MC33993_2 = 1;
+  397  2      
+  398  2              delay(5);
+  399  2              CS_MC33993_2 = 0;                                               //片选信号激活（‘0’有效）
+  400  2      
+  401  2              delay(5);
+  402  2      
+  403  2              U2C0_SSC_vSendData(0x09);                                   //command
+  404  2              while(!U2C0_SSC_ubTxDataReady());
+  405  2              
+  406  2              U2C0_SSC_vSendData(setbit_H);                       //setbit:  1:高阻
+  407  2              while(!U2C0_SSC_ubTxDataReady());
+  408  2              
+  409  2              U2C0_SSC_vSendData(setbit_L);                       //setbit:  1:高阻
+  410  2              while(!U2C0_SSC_ubTxDataReady());
+  411  2              
+  412  2              delay(120);
+  413  2              CS_MC33993_2 = 1;                                               
+  414  2      
+  415  2              delay(2);
+  416  2                      }
+  417  1       }
+  418         //****************************************************************************
+  419         // @Function      ubyte Tri_state_SG(unsigned char setbit) 
+  420         //
+  421         //----------------------------------------------------------------------------
+  422         // @Description   高阻设置
+  423         //
+  424         //----------------------------------------------------------------------------
+C166 COMPILER V7.00, MC33993                                                               03/24/2015 22:16:05 PAGE 8   
+
+  425         // @Returnvalue   
+  426         //
+  427         //----------------------------------------------------------------------------
+  428         // @Parameters    setbit    SPn,setbit<=16
+  429         //
+  430         //----------------------------------------------------------------------------
+  431         // @Date          2008-6-21      by liujia
+  432         //
+  433         //****************************************************************************
+  434         void SG_Tri_state(unsigned char setbit_H,unsigned char setbit_L,ubyte CS)
+  435         {
+  436  1              if(CS==1)
+  437  1              {
+  438  2              CS_MC33993_1 = 1;
+  439  2      
+  440  2              delay(5);
+  441  2              CS_MC33993_1 = 0;                                               //片选信号激活（‘0’有效）
+  442  2      
+  443  2              delay(5);
+  444  2      
+  445  2              U2C0_SSC_vSendData(0x0a);                                   //command  0a
+  446  2              while(!U2C0_SSC_ubTxDataReady());
+  447  2      
+  448  2              U2C0_SSC_vSendData(setbit_H);                       //setbit:  1:高阻
+  449  2              while(!U2C0_SSC_ubTxDataReady());
+  450  2      
+  451  2              U2C0_SSC_vSendData(setbit_L);                       //setbit:  1:高阻
+  452  2              while(!U2C0_SSC_ubTxDataReady());
+  453  2              
+  454  2              delay(120);
+  455  2              CS_MC33993_1 = 1;                                               
+  456  2      
+  457  2              delay(2);
+  458  2              }
+  459  1      
+  460  1                      if(CS==2)
+  461  1              {
+  462  2              CS_MC33993_2 = 1;
+  463  2      
+  464  2              delay(5);
+  465  2              CS_MC33993_2 = 0;                                               //片选信号激活（‘0’有效）
+  466  2      
+  467  2              delay(5);
+  468  2      
+  469  2              U2C0_SSC_vSendData(0x0a);                                   //command  0a
+  470  2              while(!U2C0_SSC_ubTxDataReady());
+  471  2      
+  472  2              U2C0_SSC_vSendData(setbit_H);                       //setbit:  1:高阻
+  473  2              while(!U2C0_SSC_ubTxDataReady());
+  474  2      
+  475  2              U2C0_SSC_vSendData(setbit_L);                       //setbit:  1:高阻
+  476  2              while(!U2C0_SSC_ubTxDataReady());
+  477  2              
+  478  2              delay(120);
+  479  2              CS_MC33993_2 = 1;                                               
+  480  2      
+  481  2              delay(2);
+  482  2              }
+  483  1      
+  484  1       }
+  485         //****************************************************************************
+  486         // @Function      ubyte Analog_Select(unsigned char setbit) 
+C166 COMPILER V7.00, MC33993                                                               03/24/2015 22:16:05 PAGE 9   
+
+  487         //
+  488         //----------------------------------------------------------------------------
+  489         // @Description   模拟通道选择
+  490         //
+  491         //----------------------------------------------------------------------------
+  492         // @Returnvalue   
+  493         //
+  494         //----------------------------------------------------------------------------
+  495         // @Parameters    setbit    SPn,setbit<=16
+  496         //
+  497         //----------------------------------------------------------------------------
+  498         // @Date          2008-6-21      by liujia
+  499         //
+  500         //****************************************************************************
+  501         void Analog_Select(unsigned char anchannal_H,unsigned char anchannal_L,ubyte CS)
+  502         {
+  503  1               if(CS==1)
+  504  1         {
+  505  2              CS_MC33993_1 = 1;
+  506  2      
+  507  2              delay(5);
+  508  2              CS_MC33993_1 = 0;                                               //片选信号激活（‘0’有效）
+  509  2      
+  510  2              delay(5);
+  511  2      
+  512  2              U2C0_SSC_vSendData(0x06);                                   //command
+  513  2              while(!U2C0_SSC_ubTxDataReady());
+  514  2              
+  515  2              U2C0_SSC_vSendData(anchannal_H);                        //anchannal:选择用于模拟通道的输入，目前只能选择00，即无
+  516  2              while(!U2C0_SSC_ubTxDataReady());
+  517  2              
+  518  2              U2C0_SSC_vSendData(anchannal_L);                        //anchannal:选择用于模拟通道的输入，目前只能选择00，即无
+  519  2              while(!U2C0_SSC_ubTxDataReady());
+  520  2              
+  521  2              delay(120);
+  522  2              CS_MC33993_1 = 1;                                               
+  523  2      
+  524  2              delay(2);
+  525  2               }
+  526  1      
+  527  1                if(CS==2)
+  528  1         {
+  529  2              CS_MC33993_2 = 1;
+  530  2      
+  531  2              delay(5);
+  532  2              CS_MC33993_2 = 0;                                               //片选信号激活（‘0’有效）
+  533  2      
+  534  2              delay(5);
+  535  2      
+  536  2              U2C0_SSC_vSendData(0x06);                                   //command
+  537  2              while(!U2C0_SSC_ubTxDataReady());
+  538  2              
+  539  2              U2C0_SSC_vSendData(anchannal_H);                        //anchannal:选择用于模拟通道的输入，目前只能选择00，即无
+  540  2              while(!U2C0_SSC_ubTxDataReady());
+  541  2              
+  542  2              U2C0_SSC_vSendData(anchannal_L);                        //anchannal:选择用于模拟通道的输入，目前只能选择00，即无
+  543  2              while(!U2C0_SSC_ubTxDataReady());
+  544  2              
+  545  2              delay(120);
+  546  2              CS_MC33993_2 = 1;                                               
+  547  2      
+  548  2              delay(2);
+C166 COMPILER V7.00, MC33993                                                               03/24/2015 22:16:05 PAGE 10  
+
+  549  2               }
+  550  1      
+  551  1       }
+*** WARNING C174 IN LINE 381 OF MC33993.C: 'Scs_EnableHighPrecOsc': unreferenced 'static' function
+
+
+MODULE INFORMATION:   INITIALIZED  UNINITIALIZED
+  CODE SIZE        =        1400     --------
+  NEAR-CONST SIZE  =    --------     --------
+  FAR-CONST SIZE   =    --------     --------
+  HUGE-CONST SIZE  =    --------     --------
+  XHUGE-CONST SIZE =    --------     --------
+  NEAR-DATA SIZE   =    --------     --------
+  FAR-DATA SIZE    =    --------     --------
+  XHUGE-DATA SIZE  =    --------     --------
+  IDATA-DATA SIZE  =    --------     --------
+  SDATA-DATA SIZE  =    --------     --------
+  BDATA-DATA SIZE  =    --------     --------
+  HUGE-DATA SIZE   =    --------     --------
+  BIT SIZE         =    --------     --------
+  INIT'L SIZE      =    --------     --------
+END OF MODULE INFORMATION.
+
+
+C166 COMPILATION COMPLETE.  3 WARNING(S),  0 ERROR(S)

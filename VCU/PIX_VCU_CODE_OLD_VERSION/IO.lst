@@ -1,0 +1,429 @@
+C166 COMPILER V7.00, IO                                                                    04/01/2020 13:45:19 PAGE 1   
+
+
+C166 COMPILER V7.00, COMPILATION OF MODULE IO
+OBJECT MODULE PLACED IN IO.obj
+COMPILER INVOKED BY: H:\KEILC166\C166\BIN\C166.EXE source\IO.c MODV2 BROWSE INCDIR(.\source;.\lib) MODV2 DEBUG PRINT(.\I
+                    -O.lst) OBJECT(IO.obj) 
+
+ stmt lvl     source
+
+    1         //****************************************************************************
+    2         // @Module        Parallel Ports
+    3         // @Filename      IO.c
+    4         // @Project       tiaoshi.dav
+    5         //----------------------------------------------------------------------------
+    6         // @Controller    Infineon XC2267M-104F80
+    7         //
+    8         // @Compiler      Keil
+    9         //
+   10         // @Codegenerator 2.0
+   11         //
+   12         // @Description   This file contains functions that use the IO module.
+   13         //
+   14         //----------------------------------------------------------------------------
+   15         // @Date          2020/1/14 16:27:47
+   16         //
+   17         //****************************************************************************
+   18         
+   19         // USER CODE BEGIN (IO_General,1)
+   20         
+   21         // USER CODE END
+   22         
+   23         
+   24         
+   25         //****************************************************************************
+   26         // @Project Includes
+   27         //****************************************************************************
+   28         
+   29         #include "MAIN.h"
+   30         
+   31         // USER CODE BEGIN (IO_General,2)
+   32         
+   33         // USER CODE END
+   34         
+   35         
+   36         //****************************************************************************
+   37         // @Macros
+   38         //****************************************************************************
+   39         
+   40         // USER CODE BEGIN (IO_General,3)
+   41         
+   42         // USER CODE END
+   43         
+   44         
+   45         //****************************************************************************
+   46         // @Defines
+   47         //****************************************************************************
+   48         
+   49         // USER CODE BEGIN (IO_General,4)
+   50         
+   51         // USER CODE END
+   52         
+   53         
+   54         //****************************************************************************
+C166 COMPILER V7.00, IO                                                                    04/01/2020 13:45:19 PAGE 2   
+
+   55         // @Typedefs
+   56         //****************************************************************************
+   57         
+   58         // USER CODE BEGIN (IO_General,5)
+   59         
+   60         // USER CODE END
+   61         
+   62         
+   63         //****************************************************************************
+   64         // @Imported Global Variables
+   65         //****************************************************************************
+   66         
+   67         // USER CODE BEGIN (IO_General,6)
+   68         
+   69         // USER CODE END
+   70         
+   71         
+   72         //****************************************************************************
+   73         // @Global Variables
+   74         //****************************************************************************
+   75         
+   76         // USER CODE BEGIN (IO_General,7)
+   77         
+   78         // USER CODE END
+   79         
+   80         
+   81         //****************************************************************************
+   82         // @External Prototypes
+   83         //****************************************************************************
+   84         
+   85         // USER CODE BEGIN (IO_General,8)
+   86         
+   87         // USER CODE END
+   88         
+   89         
+   90         //****************************************************************************
+   91         // @Prototypes Of Local Functions
+   92         //****************************************************************************
+   93         
+   94         // USER CODE BEGIN (IO_General,9)
+   95         
+   96         // USER CODE END
+   97         
+   98         
+   99         //****************************************************************************
+  100         // @Function      void IO_vInit(void) 
+  101         //
+  102         //----------------------------------------------------------------------------
+  103         // @Description   This is the initialization function of the IO function 
+  104         //                library. It is assumed that the SFRs used by this library 
+  105         //                are in reset state. 
+  106         //
+  107         //----------------------------------------------------------------------------
+  108         // @Returnvalue   None
+  109         //
+  110         //----------------------------------------------------------------------------
+  111         // @Parameters    None
+  112         //
+  113         //----------------------------------------------------------------------------
+  114         // @Date          2020/1/14
+  115         //
+  116         //****************************************************************************
+C166 COMPILER V7.00, IO                                                                    04/01/2020 13:45:19 PAGE 3   
+
+  117         
+  118         // USER CODE BEGIN (IO_Function,1)
+  119         
+  120         // USER CODE END
+  121         
+  122         void IO_vInit(void)
+  123         {
+  124  1        // USER CODE BEGIN (IO_Function,2)
+  125  1      
+  126  1        // USER CODE END
+  127  1      
+  128  1      
+  129  1        ///  -----------------------------------------------------------------------
+  130  1        ///  Configuration of Port P0:
+  131  1        ///  -----------------------------------------------------------------------
+  132  1        ///  P0.0 is used as alternate output for the USIC1 Channel0 Shift Data 
+  133  1        ///  output(DOUT)
+  134  1        ///  - push/pull output is selected
+  135  1        ///  P0.1 is used as alternate input for the USIC1 Channel0 Shift Data 
+  136  1        ///  input(DX0B)
+  137  1        ///  P0.2 is used as alternate output for the USIC1 Channel0 Shift Clock 
+  138  1        ///  output(SCLKOUT)
+  139  1        ///  - push/pull output is selected
+  140  1        ///  P0.3 is used as general purpose output
+  141  1        ///  - push/pull output is selected
+  142  1        ///  - the pin status is high level
+  143  1        ///  P0.4 is used as alternate input for the CAN1 Receive input(RXDC1B)
+  144  1        ///  P0.5 is used as general purpose output
+  145  1        ///  - push/pull output is selected
+  146  1        ///  - the pin status is low level
+  147  1        ///  P0.6 is used as alternate output for the CAN1 Transmit Output(TXDC1A)
+  148  1        ///  - push/pull output is selected
+  149  1        ///  P0.7 is used as general purpose output
+  150  1        ///  - push/pull output is selected
+  151  1        ///  - the pin status is low level
+  152  1      
+  153  1        ///  P0.0 - P0.3 output driver characteristic: strong driver
+  154  1        ///  P0.4 - P0.7 output driver characteristic: strong driver
+  155  1      
+  156  1        ///  P0.0 - P0.3 output edge characteristic: sharp edge mode
+  157  1        ///  P0.4 - P0.7 output edge characteristic: sharp edge mode
+  158  1      
+  159  1        P0_OUT         =  0x0008;      // load data output register
+  160  1        P0_IOCR03      =  0x0080;      // load port control register 3
+  161  1        P0_IOCR05      =  0x0080;      // load port control register 5
+  162  1        P0_IOCR07      =  0x0080;      // load port control register 7
+  163  1      
+  164  1        ///  -----------------------------------------------------------------------
+  165  1        ///  Configuration of Port P1:
+  166  1        ///  -----------------------------------------------------------------------
+  167  1        ///  P1.0 is used as general purpose output
+  168  1        ///  - push/pull output is selected
+  169  1        ///  - the pin status is low level
+  170  1        ///  P1.1 is used as general purpose output
+  171  1        ///  - push/pull output is selected
+  172  1        ///  - the pin status is low level
+  173  1        ///  P1.2 is used as general purpose output
+  174  1        ///  - push/pull output is selected
+  175  1        ///  - the pin status is low level
+  176  1        ///  P1.3 is used as general input
+  177  1        ///  - pull device is tristate 
+  178  1        ///  P1.4 is used as general input
+C166 COMPILER V7.00, IO                                                                    04/01/2020 13:45:19 PAGE 4   
+
+  179  1        ///  - pull device is tristate 
+  180  1        ///  P1.5 is used as general input
+  181  1        ///  - pull-up device is assigned
+  182  1        ///  P1.6 is used as general input
+  183  1        ///  - pull device is tristate 
+  184  1        ///  P1.7 is used as general input
+  185  1        ///  - pull device is tristate 
+  186  1      
+  187  1        ///  P1.0 - P1.3 output driver characteristic: strong driver
+  188  1        ///  P1.4 - P1.7 output driver characteristic: strong driver
+  189  1      
+  190  1        ///  P1.0 - P1.3 output edge characteristic: sharp edge mode
+  191  1        ///  P1.4 - P1.7 output edge characteristic: sharp edge mode
+  192  1      
+  193  1        P1_IOCR00      =  0x0080;      // load port control register 0
+  194  1        P1_IOCR01      =  0x0080;      // load port control register 1
+  195  1        P1_IOCR02      =  0x0080;      // load port control register 2
+  196  1        P1_IOCR05      =  0x0020;      // load port control register 5
+  197  1      
+  198  1        ///  -----------------------------------------------------------------------
+  199  1        ///  Configuration of Port P2:
+  200  1        ///  -----------------------------------------------------------------------
+  201  1        ///  P2.0 is used as alternate input for the CAN0 Receive input(RXDC0C)
+  202  1        ///  P2.1 is used as alternate output for the CAN0 Transmit output(TXDC0C)
+  203  1        ///  - push/pull output is selected
+  204  1        ///  P2.2 is used as general input
+  205  1        ///  - pull device is tristate 
+  206  1        ///  P2.8 is used as general input
+  207  1        ///  - pull device is tristate 
+  208  1        ///  P2.10 is used as general input
+  209  1        ///  - pull device is tristate 
+  210  1        ///  P2.11 is used as general input
+  211  1        ///  - pull device is tristate 
+  212  1        ///  P2.12 is used as general input
+  213  1        ///  - pull device is tristate 
+  214  1        ///  P2.13 is used as general input
+  215  1        ///  - pull device is tristate 
+  216  1      
+  217  1        ///  P2.0 - P2.3 output driver characteristic: strong driver
+  218  1        ///  P2.4 - P2.7 output driver characteristic: strong driver
+  219  1        ///  P2.8 - P2.13 output driver characteristic: strong driver
+  220  1      
+  221  1        ///  P2.0 - P2.3 output edge characteristic: sharp edge mode
+  222  1        ///  P2.4 - P2.7 output edge characteristic: sharp edge mode
+  223  1        ///  P2.8 - P2.13 output edge characteristic: sharp edge mode
+  224  1      
+  225  1      
+  226  1        ///  -----------------------------------------------------------------------
+  227  1        ///  Configuration of Port P4:
+  228  1        ///  -----------------------------------------------------------------------
+  229  1        ///  P4.0 is used as general input
+  230  1        ///  - pull device is tristate 
+  231  1        ///  P4.1 is used as general input
+  232  1        ///  - pull device is tristate 
+  233  1        ///  P4.2 is used as alternate output for the CAN2 Transmit output(TXDC2B)
+  234  1        ///  - push/pull output is selected
+  235  1        ///  P4.3 is used as alternate input for the CAN2 Receive inputA(RXDC2A)
+  236  1      
+  237  1        ///  P4.0 - P4.3 output driver characteristic: strong driver
+  238  1      
+  239  1        ///  P4.0 - P4.3 output edge characteristic: sharp edge mode
+  240  1      
+C166 COMPILER V7.00, IO                                                                    04/01/2020 13:45:19 PAGE 5   
+
+  241  1      
+  242  1        ///  -----------------------------------------------------------------------
+  243  1        ///  Configuration of Port P5:
+  244  1        ///  -----------------------------------------------------------------------
+  245  1        ///  P5.0 is used as alternate input for the  Analog Input Pin (AN50)
+  246  1        ///  P5.3 is used as general input
+  247  1        ///  P5.5 is used as general input
+  248  1        ///  P5.8 is used as general input
+  249  1        ///  P5.9 is used as general input
+  250  1        ///  P5.10 is used as general input
+  251  1        ///  P5.11 is used as general input
+  252  1        ///  P5.13 is used as general input
+  253  1        ///  P5.15 is used as general input
+  254  1      
+  255  1      
+  256  1        ///  -----------------------------------------------------------------------
+  257  1        ///  Configuration of Port P6:
+  258  1        ///  -----------------------------------------------------------------------
+  259  1        ///  P6.0 is used as general purpose output
+  260  1        ///  - push/pull output is selected
+  261  1        ///  - the pin status is low level
+  262  1        ///  P6.1 is used as general input
+  263  1        ///  - pull device is tristate 
+  264  1        ///  P6.2 is used as general input
+  265  1        ///  - pull device is tristate 
+  266  1      
+  267  1        ///  P6.0 - P6.2 output driver characteristic: strong driver
+  268  1      
+  269  1        ///  P6.0 - P6.2 output edge characteristic: sharp edge mode
+  270  1      
+  271  1        P6_IOCR00      =  0x0080;      // load port control register 0
+  272  1      
+  273  1        ///  -----------------------------------------------------------------------
+  274  1        ///  Configuration of Port P7:
+  275  1        ///  -----------------------------------------------------------------------
+  276  1        ///  P7.1 is used as general input
+  277  1        ///  - pull device is tristate 
+  278  1        ///  P7.2 is used as general input
+  279  1        ///  - pull device is tristate 
+  280  1        ///  P7.3 is used as general purpose output
+  281  1        ///  - push/pull output is selected
+  282  1        ///  - the pin status is low level
+  283  1        ///  P7.4 is used as general purpose output
+  284  1        ///  - push/pull output is selected
+  285  1        ///  - the pin status is low level
+  286  1      
+  287  1        ///  P7.0 - P7.3 output driver characteristic: strong driver
+  288  1        ///  P7.4 - P7.4 output driver characteristic: strong driver
+  289  1      
+  290  1        ///  P7.0 - P7.3 output edge characteristic: sharp edge mode
+  291  1        ///  P7.4 - P7.4 output edge characteristic: sharp edge mode
+  292  1      
+  293  1        P7_IOCR03      =  0x0080;      // load port control register 3
+  294  1        P7_IOCR04      =  0x0080;      // load port control register 4
+  295  1      
+  296  1        ///  -----------------------------------------------------------------------
+  297  1        ///  Configuration of Port P10:
+  298  1        ///  -----------------------------------------------------------------------
+  299  1        ///  P10.0 is used as alternate output for the USIC0 Channel1 Shift Data 
+  300  1        ///  output(DOUT)
+  301  1        ///  - open drain output is selected
+  302  1        ///  P10.1 is used as alternate output for the USIC0 Channel0 Shift Data 
+C166 COMPILER V7.00, IO                                                                    04/01/2020 13:45:19 PAGE 6   
+
+  303  1        ///  output(DOUT)
+  304  1        ///  - open drain output is selected
+  305  1        ///  P10.2 is used as alternate output for the USIC0 Channel0 Shift Clock 
+  306  1        ///  output(SCLKOUT)
+  307  1        ///  - open drain output is selected
+  308  1        ///  P10.3 is used as general purpose output
+  309  1        ///  - push/pull output is selected
+  310  1        ///  - the pin status is low level
+  311  1        ///  P10.4 is used as general purpose output
+  312  1        ///  - push/pull output is selected
+  313  1        ///  - the pin status is low level
+  314  1        ///  P10.5 is used as alternate output for the USIC0 Channel0 Shift Clock 
+  315  1        ///  output(SCLKOUT)
+  316  1        ///  - open drain output is selected
+  317  1        ///  P10.6 is used as general input
+  318  1        ///  - pull device is tristate 
+  319  1        ///  P10.7 is used as general input
+  320  1        ///  - pull device is tristate 
+  321  1        ///  P10.8 is used as general purpose output
+  322  1        ///  - push/pull output is selected
+  323  1        ///  - the pin status is low level
+  324  1        ///  P10.9 is used as general input
+  325  1        ///  - pull device is tristate 
+  326  1        ///  P10.10 is used as general purpose output
+  327  1        ///  - push/pull output is selected
+  328  1        ///  - the pin status is low level
+  329  1        ///  P10.11 is used as general purpose output
+  330  1        ///  - push/pull output is selected
+  331  1        ///  - the pin status is low level
+  332  1        ///  P10.12 is used as general input
+  333  1        ///  - pull device is tristate 
+  334  1        ///  P10.13 is used as general purpose output
+  335  1        ///  - push/pull output is selected
+  336  1        ///  - the pin status is low level
+  337  1        ///  P10.14 is used as general input
+  338  1        ///  - pull device is tristate 
+  339  1        ///  P10.15 is used as general input
+  340  1        ///  - pull device is tristate 
+  341  1      
+  342  1        ///  P10.0 - P10.3 output driver characteristic: strong driver
+  343  1        ///  P10.4 - P10.7 output driver characteristic: strong driver
+  344  1        ///  P10.8 - P10.11 output driver characteristic: strong driver
+  345  1        ///  P10.12 - P10.15 output driver characteristic: strong driver
+  346  1      
+  347  1        ///  P10.0 - P10.3 output edge characteristic: sharp edge mode
+  348  1        ///  P10.4 - P10.7 output edge characteristic: sharp edge mode
+  349  1        ///  P10.8 - P10.11 output edge characteristic: sharp edge mode
+  350  1        ///  P10.12 - P10.15 output edge characteristic: sharp edge mode
+  351  1      
+  352  1        P10_IOCR00     =  0x0040;      // load port control register 0
+  353  1        P10_IOCR01     =  0x0040;      // load port control register 1
+  354  1        P10_IOCR02     =  0x0040;      // load port control register 2
+  355  1        P10_IOCR03     =  0x0080;      // load port control register 3
+  356  1        P10_IOCR04     =  0x0080;      // load port control register 4
+  357  1        P10_IOCR05     =  0x0040;      // load port control register 5
+  358  1        P10_IOCR08     =  0x0080;      // load port control register 8
+  359  1        P10_IOCR10     =  0x0080;      // load port control register 10
+  360  1        P10_IOCR11     =  0x0080;      // load port control register 11
+  361  1        P10_IOCR13     =  0x0080;      // load port control register 13
+  362  1      
+  363  1        ///  -----------------------------------------------------------------------
+  364  1        ///  Configuration of Port P15:
+C166 COMPILER V7.00, IO                                                                    04/01/2020 13:45:19 PAGE 7   
+
+  365  1        ///  -----------------------------------------------------------------------
+  366  1        ///  P15.0 is used as alternate input for the  Analog Input Pin (AN0)
+  367  1        ///  P15.2 is used as alternate input for the  Analog Input Pin (AN2)
+  368  1        ///  P15.4 is used as alternate input for the  Analog Input Pin (AN4)
+  369  1        ///  P15.5 is used as alternate input for the  Analog Input Pin (AN5)
+  370  1        ///  P15.6 is used as alternate input for the  Analog Input Pin (AN6)
+  371  1      
+  372  1      
+  373  1      
+  374  1        // USER CODE BEGIN (IO_Function,3)
+  375  1      
+  376  1        // USER CODE END
+  377  1      
+  378  1      } //  End of function IO_vInit
+  379         
+  380         
+  381         
+  382         
+  383         // USER CODE BEGIN (IO_General,10)
+  384         
+  385         // USER CODE END
+  386         
+
+
+MODULE INFORMATION:   INITIALIZED  UNINITIALIZED
+  CODE SIZE        =         114     --------
+  NEAR-CONST SIZE  =    --------     --------
+  FAR-CONST SIZE   =    --------     --------
+  HUGE-CONST SIZE  =    --------     --------
+  XHUGE-CONST SIZE =    --------     --------
+  NEAR-DATA SIZE   =    --------     --------
+  FAR-DATA SIZE    =    --------     --------
+  XHUGE-DATA SIZE  =    --------     --------
+  IDATA-DATA SIZE  =    --------     --------
+  SDATA-DATA SIZE  =    --------     --------
+  BDATA-DATA SIZE  =    --------     --------
+  HUGE-DATA SIZE   =    --------     --------
+  BIT SIZE         =    --------     --------
+  INIT'L SIZE      =    --------     --------
+END OF MODULE INFORMATION.
+
+
+C166 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

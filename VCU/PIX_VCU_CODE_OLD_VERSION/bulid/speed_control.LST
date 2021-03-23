@@ -1,0 +1,226 @@
+C166 COMPILER V7.00, SPEED_CONTROL                                                         04/01/2020 13:21:48 PAGE 1   
+
+
+C166 COMPILER V7.00, COMPILATION OF MODULE SPEED_CONTROL
+OBJECT MODULE PLACED IN speed_control.OBJ
+COMPILER INVOKED BY: H:\KEILC166\C166\BIN\C166.EXE speed_control.c MODV2 BROWSE MODV2 DEBUG
+
+ stmt lvl     source
+
+    1         /************************************************************
+    2         function:vehicle speed close control ,insluce breaking
+    3                                  value seting and throttle value seting 
+    4         date:2019.09.23
+    5         author:dowson_tseng
+    6         email:dowson.tseng@gmail.com
+    7         *************************************************************/
+    8         #include "MAIN.H"
+    9         #include "speed_control.h"
+   10         #include "vehicle_control.h"
+   11         #include "pid_controler.h"
+   12         
+   13         
+   14         extern struct remote_receive remote_re;
+   15         extern struct pid_struct pid;
+   16         extern struct pid_struct pidlf;
+   17         extern struct pid_struct pidlb;
+   18         extern struct pid_struct pidrf;
+   19         extern struct pid_struct pidrb;
+   20         extern struct vehicle vehicle_rcv;
+   21         extern int torque_size_record;
+   22         
+   23         
+   24         //ÖÆ×÷ËÙ¶ÈÊý¾ÝKM/H
+   25         void send_speed(sword target_wheel_speed,ubyte gear,char low_speed_mode)
+   26         {
+   27  1              sword target_temp =0;
+   28  1      //      uword id;
+   29  1              //d_target_wheel_speed=target_wheel_speed;
+   30  1              //if(target_wheel_speed>0xde)
+   31  1              
+   32  1              if(gear==3)
+   33  1                      target_temp =(~(target_wheel_speed)+1);
+   34  1              else if(gear==1) target_temp =  target_wheel_speed;
+   35  1              else target_temp = 0;
+   36  1      
+   37  1              pid_init(&pidlf,target_temp,(sword)vehicle_rcv.lfw.rpm,0.6f,0.01f,0.1f,LFC_310,0.01f);
+   38  1          pid_init(&pidrf,target_temp,(sword)vehicle_rcv.rfw.rpm,0.6f,0.01f,0.1f,RFC_330,0.01f);
+   39  1          pid_init(&pidlb,target_temp,(sword)vehicle_rcv.lbw.rpm,0.6f,0.01f,0.1f,LBC_320,0.01f);
+   40  1          pid_init(&pidrb,target_temp,(sword)vehicle_rcv.rbw.rpm,0.6f,0.01f,0.1f,RBC_340,0.01f);   //0.6 £¬0.0 £
+             -¬0.1   
+   41  1      
+   42  1      //              Data3[0] = (uword)target_wheel_speed>>8;
+   43  1      //              Data3[1] = (uword)target_wheel_speed;
+   44  1      
+   45  1                      send_break(BREAKING_FREE,0x1);
+   46  1                      //____________________________________________________
+   47  1      
+   48  1      /*              Data3[0] = (uword)pidlf.current_speed>>8;
+   49  1                      Data3[1] = (uword)pidlf.current_speed;
+   50  1                      Data3[2] = (uword)pidlf.target_speed>>8;
+   51  1                      Data3[3] = (uword)pidlf.target_speed;   
+   52  1                      CAN_vLoadData(DBO_77,Data3);     //310-340  8-11   
+   53  1                      CAN_vTransmit(DBO_77);
+   54  1      */              
+C166 COMPILER V7.00, SPEED_CONTROL                                                         04/01/2020 13:21:48 PAGE 2   
+
+   55  1                      //-----------------------------------------------------
+   56  1      
+   57  1                      //send_torque_control(gear,pid_calculate(current_wheel_speed,target_temp,0.8f,0,0),0x1,id);             //0.8
+   58  1                        send_torque_control(gear,pid_calculate(&pidlf),0x1,pidlf.can_id,low_speed_mode);
+   59  1                        send_torque_control(gear,pid_calculate(&pidrf),0x1,pidrf.can_id,low_speed_mode);
+   60  1                        send_torque_control(gear,pid_calculate(&pidlb),0x1,pidlb.can_id,low_speed_mode);
+   61  1                        send_torque_control(gear,pid_calculate(&pidrb),0x1,pidrb.can_id,low_speed_mode);      
+   62  1               
+   63  1      
+   64  1      }
+   65          sword d_excursion =0; 
+   66         //·¢ËÍµç»úÅ¤¾Ø¿ØÖÆ
+   67         void send_torque_control(ubyte gear,sword torque,ubyte enable,uword id,char low_speed_mode)
+   68         {       
+   69  1      
+   70  1              int i=0;
+   71  1              sword excursion=625,ex=0;         //Æ«ÒÆ
+   72  1              ubyte DataL[8],DataR[8],Data[8];
+   73  1              for(i=0;i<=7;i++){
+   74  2                      DataL[i]=0; //clear
+   75  2                      DataR[i]=0;
+   76  2              }
+   77  1              torque_size_record =  torque;
+   78  1      
+   79  1                              if(torque>0){
+   80  2                                      Data[4] = 0x1;   //enable bit
+   81  2                                      excursion=625;  
+   82  2                                      excursion+=torque;
+   83  2                                      d_excursion = excursion;
+   84  2                                      Data[0] = excursion&0xff;
+*** WARNING C192 IN LINE 84 OF SPEED_CONTROL.C: '=': value truncated
+   85  2                                      Data[1] = excursion>>8;
+*** WARNING C192 IN LINE 85 OF SPEED_CONTROL.C: '=': value truncated
+   86  2                                      Data[2] = 0x00;
+   87  2                                      Data[3] = 0x00;
+   88  2                                      if(low_speed_mode==1)
+   89  2                                              Data[5] = 0x01;
+   90  2                                      else Data[5] = 0x00;
+   91  2                                      Data[6] = 0x00;
+   92  2                                      Data[7] = 0x00;
+   93  2      
+   94  2      
+   95  2                              }else if(torque<0)
+   96  1                               {
+   97  2                                      Data[4] = 0x3;
+   98  2                                      excursion=625;  
+   99  2                                      excursion+=torque;      
+  100  2      
+  101  2                                      Data[0] = excursion&0xff;
+*** WARNING C192 IN LINE 101 OF SPEED_CONTROL.C: '=': value truncated
+  102  2                                      Data[1] = excursion>>8;
+*** WARNING C192 IN LINE 102 OF SPEED_CONTROL.C: '=': value truncated
+  103  2                                      Data[2] = 0x00;
+  104  2                                      Data[3] = 0x00;
+  105  2                                      if(low_speed_mode==1)
+  106  2                                              Data[5] = 0x01;
+  107  2                                      else Data[5] = 0x00;
+  108  2                                      Data[6] = 0xa0;
+  109  2                                      Data[7] = 0x80;
+  110  2      
+  111  2      
+  112  2                              }else {
+C166 COMPILER V7.00, SPEED_CONTROL                                                         04/01/2020 13:21:48 PAGE 3   
+
+  113  2                              
+  114  2                                      Data[4] = 0x0;
+  115  2                                      excursion=625;  
+  116  2                                      excursion+=torque;      
+  117  2      
+  118  2                                      Data[0] = excursion&0xff;
+*** WARNING C192 IN LINE 118 OF SPEED_CONTROL.C: '=': value truncated
+  119  2                                      Data[1] = excursion>>8;
+*** WARNING C192 IN LINE 119 OF SPEED_CONTROL.C: '=': value truncated
+  120  2                                      Data[2] = 0x00;
+  121  2                                      Data[3] = 0x00;
+  122  2                      
+  123  2                                      if(low_speed_mode==1)
+  124  2                                              Data[5] = 0x01;
+  125  2                                      else Data[5] = 0x00;
+  126  2                                      Data[6] = 0x00;
+  127  2                                      Data[7] = 0x00;         
+  128  2                              }
+  129  1      
+  130  1              switch(id)
+  131  1              {
+  132  2                      case LFC_310:
+  133  2                      CAN_vLoadData(LFC_310,Data);     //310-340  8-11   
+  134  2                      CAN_vTransmit(LFC_310); 
+  135  2                      delay(500);
+  136  2                      break;
+  137  2      
+  138  2                      case  LBC_320:
+  139  2                      CAN_vLoadData(LBC_320,Data);     //310-340  8-11    
+  140  2                      CAN_vTransmit(LBC_320);
+  141  2                      delay(500);
+  142  2                      break;
+  143  2      
+  144  2                      case RFC_330:    //×ó±ßÂÖºÍÓÒ±ßÂÖ×ªÏò·½ÏòÏà·´£¬ÐèÒª¶ÔÊý¾Ý½øÐÐ´¦Àí
+  145  2                      CAN_vLoadData(RFC_330,Data);     //310-340  8-11   
+  146  2                      CAN_vTransmit(RFC_330);
+  147  2                      delay(500);
+  148  2                      break;
+  149  2      
+  150  2                      case RBC_340:
+  151  2                      CAN_vLoadData(RBC_340,Data);     //310-340  8-11 RBC_340   
+  152  2                      CAN_vTransmit(RBC_340);
+  153  2                      delay(500);     
+  154  2                      break;
+  155  2      
+  156  2                      default:
+  157  2                      CAN_vLoadData(LFC_310,Data);     //310-340  8-11   
+  158  2                      CAN_vTransmit(LFC_310); 
+  159  2                      delay(500);
+  160  2      
+  161  2                      CAN_vLoadData(LBC_320,Data);     //310-340  8-11    
+  162  2                      CAN_vTransmit(LBC_320);
+  163  2                      delay(500);
+  164  2      
+  165  2                      CAN_vLoadData(RFC_330,Data);     //310-340  8-11   
+  166  2                      CAN_vTransmit(RFC_330);
+  167  2                      delay(500);
+  168  2      
+  169  2                      CAN_vLoadData(RBC_340,Data);     //310-340  8-11 RBC_340   
+  170  2                      CAN_vTransmit(RBC_340);
+  171  2                      delay(500);     
+  172  2                      break;
+C166 COMPILER V7.00, SPEED_CONTROL                                                         04/01/2020 13:21:48 PAGE 4   
+
+  173  2              }
+  174  1                      
+  175  1      }
+*** WARNING C47 IN LINE 67 OF SPEED_CONTROL.C: 'gear': unreferenced parameter
+*** WARNING C47 IN LINE 67 OF SPEED_CONTROL.C: 'enable': unreferenced parameter
+  176         
+  177         
+  178         
+  179         
+  180         
+  181         
+
+
+MODULE INFORMATION:   INITIALIZED  UNINITIALIZED
+  CODE SIZE        =        1066     --------
+  NEAR-CONST SIZE  =    --------     --------
+  FAR-CONST SIZE   =    --------     --------
+  HUGE-CONST SIZE  =    --------     --------
+  XHUGE-CONST SIZE =    --------     --------
+  NEAR-DATA SIZE   =           2     --------
+  FAR-DATA SIZE    =    --------     --------
+  XHUGE-DATA SIZE  =    --------     --------
+  IDATA-DATA SIZE  =    --------     --------
+  SDATA-DATA SIZE  =    --------     --------
+  BDATA-DATA SIZE  =    --------     --------
+  HUGE-DATA SIZE   =    --------     --------
+  BIT SIZE         =    --------     --------
+  INIT'L SIZE      =           6     --------
+END OF MODULE INFORMATION.
+
+
+C166 COMPILATION COMPLETE.  8 WARNING(S),  0 ERROR(S)

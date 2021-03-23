@@ -1,0 +1,213 @@
+C166 COMPILER V7.00, BREAKING_CONTROL                                                      04/01/2020 13:21:48 PAGE 1   
+
+
+C166 COMPILER V7.00, COMPILATION OF MODULE BREAKING_CONTROL
+OBJECT MODULE PLACED IN breaking_control.OBJ
+COMPILER INVOKED BY: H:\KEILC166\C166\BIN\C166.EXE breaking_control.c MODV2 BROWSE MODV2 DEBUG
+
+ stmt lvl     source
+
+    1         /********************************************************************
+    2         author: dowson
+    3         date:20200114
+    4         part name: breaking controler 
+    5         part function descreption: this file to use code the breaking control,
+    6                 We use two different schemes for the brake actuator. One is the same
+    7                  brushed motor as the steering gear. The latest scheme uses a servo 
+    8                  control system. Here, the servo control system is mainly coded.  
+    9         ********************************************************************/
+   10         #include "breaking_control.h"
+   11         #include "MAIN.h"
+   12         #include "vehicle_control.h"
+   13         #include "steering.h"
+   14         #include "remote.h"
+   15         #include "pid_controler.h"
+   16         
+   17         //60 80 100        14 14 50
+   18         ubyte send_breaking_array[8];
+   19         
+   20         struct servo_breaking s_breaking;
+   21         
+   22         
+   23         int servo_breaking_init(void)
+   24         {
+   25  1        //使能伺服刹车控制器
+   26  1              send_breaking_array[0] = 0x00;
+   27  1              send_breaking_array[1] = 0x1e;
+   28  1              send_breaking_array[2] = 0x00;   
+   29  1              send_breaking_array[3] = 0x10;  //发送制定寄存器
+   30  1              send_breaking_array[4] = 0x00;
+   31  1              send_breaking_array[5] = 0x01; //向该值寄存器写入值
+   32  1              send_breaking_array[6] = 0x00;
+   33  1              send_breaking_array[7] = 0x00;          
+   34  1              CAN_vLoadData(SERVO_BREAK_TX_101,send_breaking_array);     
+   35  1              CAN_vTransmit(SERVO_BREAK_TX_101);      
+   36  1              delay(500);
+   37  1              //获取当前制动器的状态
+   38  1              if(s_breaking.servo_rx_data[1]==0x1f&&s_breaking.servo_rx_data[5]==0x01) //正确应答
+   39  1                      return 0;
+   40  1              //设置制动电机速度
+   41  1      
+   42  1         return -1;
+   43  1      
+   44  1      }
+   45         
+   46         
+   47         int send_servo_break(uword breaking,ubyte enable)
+   48         {
+   49  1              int excursion = 0;
+   50  1      
+   51  1              excursion = breaking*1;
+   52  1              //判断是制动还是释放制动
+   53  1              if(excursion>SERVO_TORQUE_MAX&&excursion<SERVO_FREE_TORQUE)
+   54  1                      excursion = SERVO_TORQUE_MAX;
+   55  1              //开启制动灯
+C166 COMPILER V7.00, BREAKING_CONTROL                                                      04/01/2020 13:21:48 PAGE 2   
+
+   56  1              if(excursion>50&&excursion<SERVO_FREE_TORQUE)
+   57  1                      P10_OUT_P11 = 0;
+   58  1              else P10_OUT_P11 = 1;
+   59  1              
+   60  1              //判断刹车值是否重复
+   61  1              if(s_breaking.last_breaking_size == excursion)  
+   62  1                      return -5;
+   63  1        //使能伺服刹车控制器
+   64  1        if(enable == 0x10){
+   65  2              send_breaking_array[0] = 0x00;   
+   66  2              send_breaking_array[1] = 0x24;
+   67  2              send_breaking_array[2] = 0x00;   
+   68  2              send_breaking_array[3] = 0x10;  //发送制定寄存器
+   69  2              send_breaking_array[4] = 0x00;
+   70  2              send_breaking_array[5] = 0x00; //向该值寄存器写入值
+   71  2              send_breaking_array[6] = 0x00;
+   72  2              send_breaking_array[7] = 0x01;   //使能 
+   73  2              CAN_vLoadData(SERVO_BREAK_TX_101,send_breaking_array);     
+   74  2              CAN_vTransmit(SERVO_BREAK_TX_101);      
+   75  2              delay(500);     
+   76  2              }else {
+   77  2              send_breaking_array[0] = 0x00;
+   78  2              send_breaking_array[1] = 0x24;
+   79  2              send_breaking_array[2] = 0x00;   
+   80  2              send_breaking_array[3] = 0x10;  //发送制定寄存器
+   81  2              send_breaking_array[4] = 0x00;
+   82  2              send_breaking_array[5] = 0x00; //向该值寄存器写入值
+   83  2              send_breaking_array[6] = 0x00;
+   84  2              send_breaking_array[7] = 0x00;  //失能  
+   85  2              CAN_vLoadData(SERVO_BREAK_TX_101,send_breaking_array);     
+   86  2              CAN_vTransmit(SERVO_BREAK_TX_101);      
+   87  2              delay(500);
+   88  2              }               
+   89  1               //发送电机速度和转矩
+   90  1               if(excursion>5&&excursion<SERVO_FREE_TORQUE){                             // 0x09c4
+   91  2                      send_breaking_array[0] = 0x00;
+   92  2                      send_breaking_array[1] = 0x28;
+   93  2                      send_breaking_array[2] = 0x00;   
+   94  2                      send_breaking_array[3] = 0x00;  //
+   95  2                      send_breaking_array[4] = 0x09;
+   96  2                      send_breaking_array[5] = 0xc4; //
+   97  2                      send_breaking_array[6] = 0x00;
+   98  2                      send_breaking_array[7] = 0x00;          
+   99  2                      CAN_vLoadData(SERVO_BREAK_TX_101,send_breaking_array);     
+  100  2                      CAN_vTransmit(SERVO_BREAK_TX_101);      
+  101  2                      delay(500);
+  102  2      
+  103  2                      send_breaking_array[0] = 0x00;
+  104  2                      send_breaking_array[1] = 0x28;
+  105  2                      send_breaking_array[2] = 0x00;   
+  106  2                      send_breaking_array[3] = 0x01;  //发送制定寄存器
+  107  2                      send_breaking_array[4] = excursion>>8;
+*** WARNING C192 IN LINE 107 OF BREAKING_CONTROL.C: '=': value truncated
+  108  2                      send_breaking_array[5] = excursion&0xff; //向该值寄存器写入值
+*** WARNING C192 IN LINE 108 OF BREAKING_CONTROL.C: '=': value truncated
+  109  2                      send_breaking_array[6] = 0x00;
+  110  2                      send_breaking_array[7] = 0x00;          
+  111  2                      CAN_vLoadData(SERVO_BREAK_TX_101,send_breaking_array);     
+  112  2                      CAN_vTransmit(SERVO_BREAK_TX_101);      
+  113  2                      delay(500);
+  114  2      
+  115  2               }else if(excursion>=SERVO_FREE_TORQUE&&excursion<0xffff) //说明是在释放刹车
+C166 COMPILER V7.00, BREAKING_CONTROL                                                      04/01/2020 13:21:48 PAGE 3   
+
+  116  1               {
+  117  2                      send_breaking_array[0] = 0x00;
+  118  2                      send_breaking_array[1] = 0x28;
+  119  2                      send_breaking_array[2] = 0x00;   
+  120  2                      send_breaking_array[3] = 0x00;  //
+  121  2                      send_breaking_array[4] = 0x03;
+  122  2                      send_breaking_array[5] = 0xe8; //
+  123  2                      send_breaking_array[6] = 0x00;
+  124  2                      send_breaking_array[7] = 0x00;          
+  125  2                      CAN_vLoadData(SERVO_BREAK_TX_101,send_breaking_array);     
+  126  2                      CAN_vTransmit(SERVO_BREAK_TX_101);      
+  127  2                      delay(500);
+  128  2      
+  129  2                      send_breaking_array[0] = 0x00;
+  130  2                      send_breaking_array[1] = 0x28;
+  131  2                      send_breaking_array[2] = 0x00;   
+  132  2                      send_breaking_array[3] = 0x01;  //发送制定寄存器
+  133  2                      send_breaking_array[4] = excursion>>8;
+*** WARNING C192 IN LINE 133 OF BREAKING_CONTROL.C: '=': value truncated
+  134  2                      send_breaking_array[5] = excursion&0xff; //向该值寄存器写入值
+*** WARNING C192 IN LINE 134 OF BREAKING_CONTROL.C: '=': value truncated
+  135  2                      send_breaking_array[6] = 0x00;
+  136  2                      send_breaking_array[7] = 0x00;          
+  137  2                      CAN_vLoadData(SERVO_BREAK_TX_101,send_breaking_array);     
+  138  2                      CAN_vTransmit(SERVO_BREAK_TX_101);      
+  139  2                      delay(500);      
+  140  2               }
+  141  1      
+  142  1                s_breaking.last_breaking_size =  excursion;
+*** WARNING C192 IN LINE 142 OF BREAKING_CONTROL.C: '=': value truncated
+  143  1                return 0;
+  144  1      } 
+  145         
+  146         
+  147         
+  148         
+  149         
+  150         
+  151         
+  152         
+  153         
+  154         
+  155         
+  156         
+  157         
+  158         
+  159         
+  160         
+  161         
+  162         
+  163         
+  164         
+  165         
+  166         
+  167         
+  168         
+  169         
+  170         
+  171         
+  172         
+
+
+C166 COMPILER V7.00, BREAKING_CONTROL                                                      04/01/2020 13:21:48 PAGE 4   
+
+MODULE INFORMATION:   INITIALIZED  UNINITIALIZED
+  CODE SIZE        =         630     --------
+  NEAR-CONST SIZE  =    --------     --------
+  FAR-CONST SIZE   =    --------     --------
+  HUGE-CONST SIZE  =    --------     --------
+  XHUGE-CONST SIZE =    --------     --------
+  NEAR-DATA SIZE   =          17     --------
+  FAR-DATA SIZE    =    --------     --------
+  XHUGE-DATA SIZE  =    --------     --------
+  IDATA-DATA SIZE  =    --------     --------
+  SDATA-DATA SIZE  =    --------     --------
+  BDATA-DATA SIZE  =    --------     --------
+  HUGE-DATA SIZE   =    --------     --------
+  BIT SIZE         =    --------     --------
+  INIT'L SIZE      =    --------     --------
+END OF MODULE INFORMATION.
+
+
+C166 COMPILATION COMPLETE.  5 WARNING(S),  0 ERROR(S)

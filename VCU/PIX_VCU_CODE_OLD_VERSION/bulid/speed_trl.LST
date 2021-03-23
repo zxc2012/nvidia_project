@@ -1,0 +1,49 @@
+C166 COMPILER V7.00, SPEED_TRL                                                             09/23/2019 17:59:25 PAGE 1   
+
+
+C166 COMPILER V7.00, COMPILATION OF MODULE SPEED_TRL
+OBJECT MODULE PLACED IN speed_trl.OBJ
+COMPILER INVOKED BY: E:\Keil_C166\C166\BIN\C166.EXE speed_trl.c MODV2 BROWSE MODV2 DEBUG
+
+ stmt lvl     source
+
+    1         /************************************************************
+    2         function:vehicle speed close control ,insluce breaking
+    3                                  value seting and throttle value seting 
+    4         date:2019.09.23
+    5         author:dowson_tseng
+    6         email:dowson.tseng@gmail.com
+    7         *************************************************************/
+    8         #include "MAIN.H"
+    9         #include "speed_trl.h"
+   10         
+   11         
+   12         
+   13         
+   14         
+   15         
+   16         
+   17         
+   18         
+   19         
+
+
+MODULE INFORMATION:   INITIALIZED  UNINITIALIZED
+  CODE SIZE        =    --------     --------
+  NEAR-CONST SIZE  =    --------     --------
+  FAR-CONST SIZE   =    --------     --------
+  HUGE-CONST SIZE  =    --------     --------
+  XHUGE-CONST SIZE =    --------     --------
+  NEAR-DATA SIZE   =    --------     --------
+  FAR-DATA SIZE    =    --------     --------
+  XHUGE-DATA SIZE  =    --------     --------
+  IDATA-DATA SIZE  =    --------     --------
+  SDATA-DATA SIZE  =    --------     --------
+  BDATA-DATA SIZE  =    --------     --------
+  HUGE-DATA SIZE   =    --------     --------
+  BIT SIZE         =    --------     --------
+  INIT'L SIZE      =    --------     --------
+END OF MODULE INFORMATION.
+
+
+C166 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

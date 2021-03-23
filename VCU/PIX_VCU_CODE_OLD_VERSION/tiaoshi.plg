@@ -1,0 +1,574 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+F:\#根目录\四轮转向\科默VCU开发\program\对外\PIX_VCU_CODE\tiaoshi.uvproj
+Project File Date:  01/17/2020
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling Start_V3.A66...
+A166 MACRO ASSEMBLER V5.33 - SN: K6NMC-Z0I5AC
+COPYRIGHT KEIL ELEKTRONIK GmbH 2009
+"H:\KEILC166\C166\BIN\A166.EXE" "Start_V3.A66" MODV2 SEGMENTED MODV2 SET (SMALL) DEBUG EP
+A166 FATAL ERROR -
+  FILE:       Start_V3.A66
+  ERROR:      CAN'T OPEN FILE
+A166 TERMINATED.
+Target not created
+Build target 'Target 1'
+compiling ADC0.c...
+compiling ADC1.c...
+compiling CAN.c...
+compiling CC2.c...
+SOURCE\CC2.C(440): warning C192: '=': value truncated
+SOURCE\CC2.C(441): warning C192: '=': value truncated
+SOURCE\CC2.C(496): warning C192: '=': value truncated
+SOURCE\CC2.C(497): warning C192: '=': value truncated
+SOURCE\CC2.C(552): warning C192: '=': value truncated
+SOURCE\CC2.C(553): warning C192: '=': value truncated
+SOURCE\CC2.C(608): warning C192: '=': value truncated
+SOURCE\CC2.C(609): warning C192: '=': value truncated
+compiling FUNC0.c...
+SOURCE\FUNC0.C(1): warning C38: empty translation unit
+compiling GPT1.c...
+SOURCE\GPT1.C(334): warning C192: '=': value truncated
+SOURCE\GPT1.C(335): warning C192: '=': value truncated
+SOURCE\GPT1.C(336): warning C192: '=': value truncated
+SOURCE\GPT1.C(337): warning C192: '=': value truncated
+SOURCE\GPT1.C(338): warning C192: '=': value truncated
+SOURCE\GPT1.C(339): warning C192: '=': value truncated
+SOURCE\GPT1.C(340): warning C192: '=': value truncated
+SOURCE\GPT1.C(341): warning C192: '=': value truncated
+SOURCE\GPT1.C(346): warning C192: '=': value truncated
+SOURCE\GPT1.C(347): warning C192: '=': value truncated
+SOURCE\GPT1.C(348): warning C192: '=': value truncated
+SOURCE\GPT1.C(349): warning C192: '=': value truncated
+compiling GPT2.c...
+compiling IO.c...
+compiling MC33993.C...
+SOURCE\MC33993.C(44): warning C140: 'U2C0_SSC_vSendData' undefined; assuming 'extern int U2C0_SSC_vSendData()'
+SOURCE\MC33993.C(45): warning C140: 'U2C0_SSC_ubTxDataReady' undefined; assuming 'extern int U2C0_SSC_ubTxDataReady()'
+compiling SCS.c...
+compiling U0C0.c...
+compiling U0C1.c...
+compiling U1C0.c...
+compiling U2C0.c...
+compiling USIC0.c...
+compiling USIC1.c...
+compiling USIC2.c...
+SOURCE\USIC2.C(151): warning C140: 'U2C0_SSC_vInit' undefined; assuming 'extern int U2C0_SSC_vInit()'
+compiling VARI0.c...
+SOURCE\VARI0.C(1): warning C38: empty translation unit
+compiling VEHI0.c...
+SOURCE\VEHI0.C(1): warning C38: empty translation unit
+compiling breaking_control.c...
+source\breaking_control.c(15): error C318: can't open file 'pid_controler.h'
+SOURCE\BREAKING_CONTROL.C(107): warning C192: '=': value truncated
+SOURCE\BREAKING_CONTROL.C(108): warning C192: '=': value truncated
+SOURCE\BREAKING_CONTROL.C(133): warning C192: '=': value truncated
+SOURCE\BREAKING_CONTROL.C(134): warning C192: '=': value truncated
+SOURCE\BREAKING_CONTROL.C(142): warning C192: '=': value truncated
+compiling differential_control.c...
+source\differential_control.c(13): error C318: can't open file 'pid_controler.h'
+SOURCE\DIFFERENTIAL_CONTROL.C(48): warning C140: 'pid_init' undefined; assuming 'extern int pid_init()'
+SOURCE\DIFFERENTIAL_CONTROL.C(53): warning C140: 'pid_calculate' undefined; assuming 'extern int pid_calculate()'
+compiling MAIN.c...
+source\MAIN.c(35): error C318: can't open file 'pid_controler.h'
+SOURCE\MAIN.C(335): warning C192: '=': value truncated
+SOURCE\MAIN.C(336): warning C192: '=': value truncated
+SOURCE\MAIN.C(341): warning C192: '=': value truncated
+SOURCE\MAIN.C(342): warning C192: '=': value truncated
+SOURCE\MAIN.C(347): warning C192: '=': value truncated
+SOURCE\MAIN.C(348): warning C192: '=': value truncated
+SOURCE\MAIN.C(353): warning C192: '=': value truncated
+SOURCE\MAIN.C(354): warning C192: '=': value truncated
+SOURCE\MAIN.C(359): warning C192: '=': value truncated
+SOURCE\MAIN.C(360): warning C192: '=': value truncated
+SOURCE\MAIN.C(365): warning C192: '=': value truncated
+SOURCE\MAIN.C(366): warning C192: '=': value truncated
+compiling speed_control.c...
+source\speed_control.c(11): error C318: can't open file 'pid_controler.h'
+SOURCE\SPEED_CONTROL.C(37): warning C140: 'pid_init' undefined; assuming 'extern int pid_init()'
+SOURCE\SPEED_CONTROL.C(58): warning C140: 'pid_calculate' undefined; assuming 'extern int pid_calculate()'
+SOURCE\SPEED_CONTROL.C(84): warning C192: '=': value truncated
+SOURCE\SPEED_CONTROL.C(85): warning C192: '=': value truncated
+SOURCE\SPEED_CONTROL.C(101): warning C192: '=': value truncated
+SOURCE\SPEED_CONTROL.C(102): warning C192: '=': value truncated
+SOURCE\SPEED_CONTROL.C(118): warning C192: '=': value truncated
+SOURCE\SPEED_CONTROL.C(119): warning C192: '=': value truncated
+SOURCE\SPEED_CONTROL.C(67): warning C47: 'gear': unreferenced parameter
+SOURCE\SPEED_CONTROL.C(67): warning C47: 'enable': unreferenced parameter
+compiling steering.c...
+SOURCE\STEERING.C(44): warning C192: '=': value truncated
+SOURCE\STEERING.C(45): warning C192: '=': value truncated
+SOURCE\STEERING.C(53): warning C192: '=': value truncated
+SOURCE\STEERING.C(54): warning C192: '=': value truncated
+SOURCE\STEERING.C(63): warning C192: '=': value truncated
+SOURCE\STEERING.C(64): warning C192: '=': value truncated
+SOURCE\STEERING.C(82): warning C192: '=': value truncated
+SOURCE\STEERING.C(83): warning C192: '=': value truncated
+SOURCE\STEERING.C(91): warning C192: '=': value truncated
+SOURCE\STEERING.C(92): warning C192: '=': value truncated
+compiling vehicle_control.c...
+source\vehicle_control.c(15): error C318: can't open file 'pid_controler.h'
+SOURCE\VEHICLE_CONTROL.C(166): warning C192: '=': value truncated
+SOURCE\VEHICLE_CONTROL.C(167): warning C192: '=': value truncated
+Target not created
+Build target 'Target 1'
+compiling ADC0.c...
+compiling ADC1.c...
+compiling CAN.c...
+compiling CC2.c...
+SOURCE\CC2.C(440): warning C192: '=': value truncated
+SOURCE\CC2.C(441): warning C192: '=': value truncated
+SOURCE\CC2.C(496): warning C192: '=': value truncated
+SOURCE\CC2.C(497): warning C192: '=': value truncated
+SOURCE\CC2.C(552): warning C192: '=': value truncated
+SOURCE\CC2.C(553): warning C192: '=': value truncated
+SOURCE\CC2.C(608): warning C192: '=': value truncated
+SOURCE\CC2.C(609): warning C192: '=': value truncated
+compiling FUNC0.c...
+SOURCE\FUNC0.C(1): warning C38: empty translation unit
+compiling GPT1.c...
+SOURCE\GPT1.C(334): warning C192: '=': value truncated
+SOURCE\GPT1.C(335): warning C192: '=': value truncated
+SOURCE\GPT1.C(336): warning C192: '=': value truncated
+SOURCE\GPT1.C(337): warning C192: '=': value truncated
+SOURCE\GPT1.C(338): warning C192: '=': value truncated
+SOURCE\GPT1.C(339): warning C192: '=': value truncated
+SOURCE\GPT1.C(340): warning C192: '=': value truncated
+SOURCE\GPT1.C(341): warning C192: '=': value truncated
+SOURCE\GPT1.C(346): warning C192: '=': value truncated
+SOURCE\GPT1.C(347): warning C192: '=': value truncated
+SOURCE\GPT1.C(348): warning C192: '=': value truncated
+SOURCE\GPT1.C(349): warning C192: '=': value truncated
+compiling GPT2.c...
+compiling IO.c...
+compiling MC33993.C...
+SOURCE\MC33993.C(44): warning C140: 'U2C0_SSC_vSendData' undefined; assuming 'extern int U2C0_SSC_vSendData()'
+SOURCE\MC33993.C(45): warning C140: 'U2C0_SSC_ubTxDataReady' undefined; assuming 'extern int U2C0_SSC_ubTxDataReady()'
+compiling SCS.c...
+compiling U0C0.c...
+compiling U0C1.c...
+compiling U1C0.c...
+compiling U2C0.c...
+compiling USIC0.c...
+compiling USIC1.c...
+compiling USIC2.c...
+SOURCE\USIC2.C(151): warning C140: 'U2C0_SSC_vInit' undefined; assuming 'extern int U2C0_SSC_vInit()'
+compiling VARI0.c...
+SOURCE\VARI0.C(1): warning C38: empty translation unit
+compiling VEHI0.c...
+SOURCE\VEHI0.C(1): warning C38: empty translation unit
+compiling breaking_control.c...
+SOURCE\BREAKING_CONTROL.C(107): warning C192: '=': value truncated
+SOURCE\BREAKING_CONTROL.C(108): warning C192: '=': value truncated
+SOURCE\BREAKING_CONTROL.C(133): warning C192: '=': value truncated
+SOURCE\BREAKING_CONTROL.C(134): warning C192: '=': value truncated
+SOURCE\BREAKING_CONTROL.C(142): warning C192: '=': value truncated
+compiling differential_control.c...
+compiling MAIN.c...
+SOURCE\MAIN.C(335): warning C192: '=': value truncated
+SOURCE\MAIN.C(336): warning C192: '=': value truncated
+SOURCE\MAIN.C(341): warning C192: '=': value truncated
+SOURCE\MAIN.C(342): warning C192: '=': value truncated
+SOURCE\MAIN.C(347): warning C192: '=': value truncated
+SOURCE\MAIN.C(348): warning C192: '=': value truncated
+SOURCE\MAIN.C(353): warning C192: '=': value truncated
+SOURCE\MAIN.C(354): warning C192: '=': value truncated
+SOURCE\MAIN.C(359): warning C192: '=': value truncated
+SOURCE\MAIN.C(360): warning C192: '=': value truncated
+SOURCE\MAIN.C(365): warning C192: '=': value truncated
+SOURCE\MAIN.C(366): warning C192: '=': value truncated
+compiling speed_control.c...
+SOURCE\SPEED_CONTROL.C(84): warning C192: '=': value truncated
+SOURCE\SPEED_CONTROL.C(85): warning C192: '=': value truncated
+SOURCE\SPEED_CONTROL.C(101): warning C192: '=': value truncated
+SOURCE\SPEED_CONTROL.C(102): warning C192: '=': value truncated
+SOURCE\SPEED_CONTROL.C(118): warning C192: '=': value truncated
+SOURCE\SPEED_CONTROL.C(119): warning C192: '=': value truncated
+SOURCE\SPEED_CONTROL.C(67): warning C47: 'gear': unreferenced parameter
+SOURCE\SPEED_CONTROL.C(67): warning C47: 'enable': unreferenced parameter
+compiling steering.c...
+SOURCE\STEERING.C(44): warning C192: '=': value truncated
+SOURCE\STEERING.C(45): warning C192: '=': value truncated
+SOURCE\STEERING.C(53): warning C192: '=': value truncated
+SOURCE\STEERING.C(54): warning C192: '=': value truncated
+SOURCE\STEERING.C(63): warning C192: '=': value truncated
+SOURCE\STEERING.C(64): warning C192: '=': value truncated
+SOURCE\STEERING.C(82): warning C192: '=': value truncated
+SOURCE\STEERING.C(83): warning C192: '=': value truncated
+SOURCE\STEERING.C(91): warning C192: '=': value truncated
+SOURCE\STEERING.C(92): warning C192: '=': value truncated
+compiling vehicle_control.c...
+SOURCE\VEHICLE_CONTROL.C(166): warning C192: '=': value truncated
+SOURCE\VEHICLE_CONTROL.C(167): warning C192: '=': value truncated
+compiling pid_controler.c...
+SOURCE\PID_CONTROLER.C(40): warning C47: 'maga': unreferenced parameter
+SOURCE\PID_CONTROLER.C(101): warning C192: '=': value truncated
+SOURCE\PID_CONTROLER.C(102): warning C192: '=': value truncated
+SOURCE\PID_CONTROLER.C(103): warning C192: '=': value truncated
+SOURCE\PID_CONTROLER.C(104): warning C192: '=': value truncated
+SOURCE\PID_CONTROLER.C(105): warning C192: '=': value truncated
+SOURCE\PID_CONTROLER.C(106): warning C192: '=': value truncated
+SOURCE\PID_CONTROLER.C(107): warning C192: '=': value truncated
+SOURCE\PID_CONTROLER.C(108): warning C192: '=': value truncated
+linking...
+*** ERROR L125: INTERRUPT NUMBER NOT DEFINED
+    SYMBOL:  CC2_CC16INT
+*** ERROR L125: INTERRUPT NUMBER NOT DEFINED
+    SYMBOL:  CC2_CC17INT
+*** ERROR L125: INTERRUPT NUMBER NOT DEFINED
+    SYMBOL:  CC2_CC18INT
+*** ERROR L125: INTERRUPT NUMBER NOT DEFINED
+    SYMBOL:  CC2_CC19INT
+*** ERROR L125: INTERRUPT NUMBER NOT DEFINED
+    SYMBOL:  CC2_CC20INT
+*** ERROR L127: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 17F8H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 17FCH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1800H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 180EH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1812H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1818H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1826H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1834H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1838H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 183EH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 184CH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 185AH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 185EH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1864H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1872H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1888H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 18A0H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 18B8H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 18BEH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 18D2H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 18E8H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 18FEH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1904H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 191CH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1936H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1950H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1956H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 196EH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1988H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 19A2H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 19A8H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 19BAH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 19C0H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 19D2H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 19D8H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 19EAH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 19F0H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1A00H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1A08H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1A1AH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1A20H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1A32H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1A38H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1A4AH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1A50H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1A62H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  CAN.obj (CAN)
+    ADDRESS: 1A68H
+*** ERROR L127: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  remote_re
+    MODULE:  GPT2.obj (GPT2)
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  GPT2.obj (GPT2)
+    ADDRESS: 4FCEH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  GPT2.obj (GPT2)
+    ADDRESS: 4FD2H
+*** WARNING L20: DATA TYPES DIFFERENT
+    SYMBOL:  U2C0_SSC_vSendData
+    MODULE:  MC33993.obj (MC33993)
+   DEFINED:  U2C0.obj (U2C0)
+*** WARNING L20: DATA TYPES DIFFERENT
+    SYMBOL:  U2C0_SSC_ubTxDataReady
+    MODULE:  MC33993.obj (MC33993)
+   DEFINED:  U2C0.obj (U2C0)
+*** WARNING L20: DATA TYPES DIFFERENT
+    SYMBOL:  U2C0_SSC_vInit
+    MODULE:  USIC2.obj (USIC2)
+   DEFINED:  U2C0.obj (U2C0)
+*** ERROR L127: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  remote_re
+    MODULE:  MAIN.obj (MAIN)
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  MAIN.obj (MAIN)
+    ADDRESS: 25CCH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  MAIN.obj (MAIN)
+    ADDRESS: 25D0H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  MAIN.obj (MAIN)
+    ADDRESS: 2624H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  MAIN.obj (MAIN)
+    ADDRESS: 262CH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  MAIN.obj (MAIN)
+    ADDRESS: 2638H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  MAIN.obj (MAIN)
+    ADDRESS: 2674H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  MAIN.obj (MAIN)
+    ADDRESS: 267AH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  MAIN.obj (MAIN)
+    ADDRESS: 2688H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  MAIN.obj (MAIN)
+    ADDRESS: 269AH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  MAIN.obj (MAIN)
+    ADDRESS: 26AAH
+*** ERROR L127: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 3204H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 320CH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 3226H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 3238H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 3240H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 3272H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 327AH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 3286H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 328CH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 32B4H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 32D2H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 3318H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 331CH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 332CH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 3330H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 3354H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 335EH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 337CH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 33BCH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 33C0H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  remote_re
+    MODULE:  vehicle_control.obj (VEHICLE_CONTROL)
+    ADDRESS: 33CCH
+Program Size: data=4747(near=4747) const=224(near=0) code=22490
+Target not created

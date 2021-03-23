@@ -1,0 +1,193 @@
+C166 COMPILER V7.00, PID_CONTROLER                                                         04/01/2020 13:45:21 PAGE 1   
+
+
+C166 COMPILER V7.00, COMPILATION OF MODULE PID_CONTROLER
+OBJECT MODULE PLACED IN pid_controler.obj
+COMPILER INVOKED BY: H:\KEILC166\C166\BIN\C166.EXE source\pid_controler.c MODV2 BROWSE INCDIR(.\source;.\lib) MODV2 DEBU
+                    -G PRINT(.\pid_controler.lst) OBJECT(pid_controler.obj) 
+
+ stmt lvl     source
+
+    1         
+    2         
+    3         /********************************************************************
+    4         author: dowson
+    5         date:20191205
+    6         part name: pid controler 
+    7         part function descreption: about the pid controlling code , main 
+    8                 function is Calculate the torque value to be sent 
+    9         ********************************************************************/
+   10         #include "vehicle_control.h"
+   11         #include "pid_controler.h"
+   12         #include "stdlib.h"
+   13         #include "speed_control.h"
+   14         
+   15         
+   16         struct fuzzypid torque_fpid;   //实例化一个用于控制转矩的模糊pid结构
+   17         extern struct pid_struct pid;
+   18         extern struct pid_struct pidlf;
+   19         extern struct pid_struct pidlb;
+   20         extern struct pid_struct pidrf;
+   21         extern struct pid_struct pidrb;
+   22         
+   23         
+   24         float debug_pid_c,debug_pid_t,debug_pid_err ;
+   25         //P,I,D的模糊推理规则库
+   26         
+   27         
+   28         //输入线性量化函数
+   29         
+   30         
+   31         //输入隶属度函数 
+   32         
+   33         
+   34         //模糊推理函数
+   35         
+   36         
+   37         //输出隶属度函数 
+   38         
+   39         //PID控制函数
+   40         void pid_init(struct pid_struct *pidx,float target_speed, float current_speed,float kp,float ki,float kd,u
+             -word can_id,float maga)
+   41         {
+   42  1              pidx->can_id = can_id;
+   43  1              pidx->current_speed = current_speed;
+   44  1              pidx->target_speed = target_speed;
+   45  1              
+   46  1              pidx->Kp = kp;//0.2*0.4;
+   47  1              pidx->Ki = ki;//0.95;
+   48  1              pidx->Kd = kd;//0.1; //size * speed tf T size
+   49  1      
+   50  1      /*              Data3[0] = (uword)pidx->target_speed>>8;
+   51  1                      Data3[1] = (uword)pidx->target_speed;
+   52  1                      Data3[2] = (uword)target_speed>>8;
+   53  1                      Data3[3] = (uword)target_speed;
+C166 COMPILER V7.00, PID_CONTROLER                                                         04/01/2020 13:45:21 PAGE 2   
+
+   54  1                      Data3[4] = (uword)pidx->current_speed>>8;
+   55  1                      Data3[5] = (uword)pidx->current_speed;
+   56  1              //      Data3[6] = (uword)pidx.err>>8;
+   57  1              //      Data3[7] = (uword)pidx.err;                     
+   58  1                      CAN_vLoadData(DBO_77,Data3);     //310-340  8-11   
+   59  1                      CAN_vTransmit(DBO_77);
+   60  1      */              
+   61  1      }
+*** WARNING C47 IN LINE 40 OF SOURCE\PID_CONTROLER.C: 'maga': unreferenced parameter
+   62         float d_integral =0.0;
+   63         sword pid_calculate(struct pid_struct *pidx)
+   64         {
+   65  1              float pid_output=0;
+   66  1              float c1,c2,c3,c_size;
+   67  1      
+   68  1              pidx->err = pidx->target_speed - pidx->current_speed;
+   69  1              pidx->integral += pidx->err;
+   70  1              if(pidx->integral>1250.0)
+   71  1                       pidx->integral = 1250.0;
+   72  1              if(pidx->integral<-1250.0)
+   73  1                       pidx->integral = -1250.0;
+   74  1                       
+   75  1              c_size = pidx->gama*pidx->Kd + pidx->Kp;
+   76  1              c3 = pidx->Kd/c_size;
+   77  1              c2 = (pidx->Kd+pidx->Kp)/c_size;
+   78  1              c1= pidx->gama*c3;
+   79  1          
+   80  1              pidx->derivative =      c1* pidx->derivative +c2*pidx->current_speed-c3*pidx->pre_current_speed;
+   81  1              pid_output = pidx->Kp*(pidx->err) + pidx->Ki*pidx->integral + pidx->Kd*(pidx->err - pidx->pre_err);
+   82  1      
+   83  1          pidx-> pre_current_speed =  pidx->current_speed;
+   84  1              pidx->pre_err = pidx->err;
+   85  1              pidx->pre_pre_err = pidx->pre_err;
+   86  1              
+   87  1              d_integral =  pidx->integral;
+   88  1              debug_pid_c = pidx->current_speed;
+   89  1              debug_pid_t = pidx->target_speed;
+   90  1              
+   91  1      
+   92  1      
+   93  1              if(pid_output <-172)   //-172
+   94  1                      pid_output = -172;
+   95  1              else if(pid_output>172) //最大油门（215）的80%
+   96  1                      pid_output = 172;
+   97  1      debug_pid_err = pid_output;
+   98  1      //如果力矩方向与挡位方向相反说明是反转制动，此时不应给过大力拒，造成急性换向损坏电机
+   99  1       
+  100  1      
+  101  1                      Data3[0] = (uword)pidx->target_speed>>8;
+*** WARNING C192 IN LINE 101 OF SOURCE\PID_CONTROLER.C: '=': value truncated
+  102  1                      Data3[1] = (uword)pidx->target_speed;
+*** WARNING C192 IN LINE 102 OF SOURCE\PID_CONTROLER.C: '=': value truncated
+  103  1                      Data3[2] = (uword)pid_output>>8;
+*** WARNING C192 IN LINE 103 OF SOURCE\PID_CONTROLER.C: '=': value truncated
+  104  1                      Data3[3] = (uword)pid_output;
+*** WARNING C192 IN LINE 104 OF SOURCE\PID_CONTROLER.C: '=': value truncated
+  105  1                      Data3[4] = (uword)pidx->current_speed>>8;
+*** WARNING C192 IN LINE 105 OF SOURCE\PID_CONTROLER.C: '=': value truncated
+  106  1                      Data3[5] = (uword)pidx->current_speed;
+*** WARNING C192 IN LINE 106 OF SOURCE\PID_CONTROLER.C: '=': value truncated
+  107  1                      Data3[6] = (uword)pidx->err>>8;
+*** WARNING C192 IN LINE 107 OF SOURCE\PID_CONTROLER.C: '=': value truncated
+C166 COMPILER V7.00, PID_CONTROLER                                                         04/01/2020 13:45:21 PAGE 3   
+
+  108  1                      Data3[7] = (uword)pidx->err;                    
+*** WARNING C192 IN LINE 108 OF SOURCE\PID_CONTROLER.C: '=': value truncated
+  109  1                      CAN_vLoadData(DBO_77,Data3);     //310-340  8-11   
+  110  1                      CAN_vTransmit(DBO_77);
+  111  1      
+  112  1              return (sword)pid_output;  //out put the T
+  113  1      }
+  114           
+  115         
+  116         
+  117         
+  118         
+  119         
+  120         
+  121         
+  122         
+  123         
+  124         
+  125         
+  126         
+  127         
+  128         
+  129         
+  130         
+  131         
+  132         
+  133         
+  134         
+  135         
+  136         
+  137         
+  138         
+  139         
+  140         
+  141         
+  142         
+  143         
+  144         
+  145         
+  146         
+  147         
+  148         
+
+
+MODULE INFORMATION:   INITIALIZED  UNINITIALIZED
+  CODE SIZE        =         858     --------
+  NEAR-CONST SIZE  =    --------     --------
+  FAR-CONST SIZE   =    --------     --------
+  HUGE-CONST SIZE  =    --------     --------
+  XHUGE-CONST SIZE =    --------     --------
+  NEAR-DATA SIZE   =         108     --------
+  FAR-DATA SIZE    =    --------     --------
+  XHUGE-DATA SIZE  =    --------     --------
+  IDATA-DATA SIZE  =    --------     --------
+  SDATA-DATA SIZE  =    --------     --------
+  BDATA-DATA SIZE  =    --------     --------
+  HUGE-DATA SIZE   =    --------     --------
+  BIT SIZE         =    --------     --------
+  INIT'L SIZE      =           8     --------
+END OF MODULE INFORMATION.
+
+
+C166 COMPILATION COMPLETE.  9 WARNING(S),  0 ERROR(S)

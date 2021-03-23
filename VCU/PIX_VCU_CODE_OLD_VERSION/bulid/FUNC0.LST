@@ -1,0 +1,32 @@
+C166 COMPILER V7.00, FUNC0                                                                 12/07/2017 22:21:47 PAGE 1   
+
+
+C166 COMPILER V7.00, COMPILATION OF MODULE FUNC0
+OBJECT MODULE PLACED IN FUNC0.OBJ
+COMPILER INVOKED BY: C:\Keil\C166\BIN\C166.EXE FUNC0.c MODV2 BROWSE MODV2 DEBUG
+
+ stmt lvl     source
+
+    1         
+*** WARNING C38 IN LINE 2 OF FUNC0.C: empty translation unit
+
+
+MODULE INFORMATION:   INITIALIZED  UNINITIALIZED
+  CODE SIZE        =    --------     --------
+  NEAR-CONST SIZE  =    --------     --------
+  FAR-CONST SIZE   =    --------     --------
+  HUGE-CONST SIZE  =    --------     --------
+  XHUGE-CONST SIZE =    --------     --------
+  NEAR-DATA SIZE   =    --------     --------
+  FAR-DATA SIZE    =    --------     --------
+  XHUGE-DATA SIZE  =    --------     --------
+  IDATA-DATA SIZE  =    --------     --------
+  SDATA-DATA SIZE  =    --------     --------
+  BDATA-DATA SIZE  =    --------     --------
+  HUGE-DATA SIZE   =    --------     --------
+  BIT SIZE         =    --------     --------
+  INIT'L SIZE      =    --------     --------
+END OF MODULE INFORMATION.
+
+
+C166 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

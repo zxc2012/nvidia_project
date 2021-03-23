@@ -1,0 +1,558 @@
+C166 COMPILER V7.00, GPT1                                                                  04/01/2020 13:21:47 PAGE 1   
+
+
+C166 COMPILER V7.00, COMPILATION OF MODULE GPT1
+OBJECT MODULE PLACED IN GPT1.OBJ
+COMPILER INVOKED BY: H:\KEILC166\C166\BIN\C166.EXE GPT1.c MODV2 BROWSE MODV2 DEBUG
+
+ stmt lvl     source
+
+    1         //****************************************************************************
+    2         // @Module        General Purpose Timer Unit (GPT1)
+    3         // @Filename      GPT1.c
+    4         // @Project       tiaoshi.dav
+    5         //----------------------------------------------------------------------------
+    6         // @Controller    Infineon XC2267M-104F80
+    7         //
+    8         // @Compiler      Keil
+    9         //
+   10         // @Codegenerator 2.0
+   11         //
+   12         // @Description   This file contains functions that use the GPT1 module.
+   13         //
+   14         //----------------------------------------------------------------------------
+   15         // @Date          2020/1/14 16:27:48
+   16         //
+   17         //****************************************************************************
+   18         
+   19         // USER CODE BEGIN (GPT1_General,1)
+   20         
+   21         // USER CODE END
+   22         
+   23         
+   24         
+   25         //****************************************************************************
+   26         // @Project Includes
+   27         //****************************************************************************
+   28         
+   29         #include "MAIN.h"
+   30         
+   31         // USER CODE BEGIN (GPT1_General,2)
+   32         #include "remote.h"
+   33         #include "steering.h"
+   34         #include "vehicle_control.h"
+   35         
+   36         // USER CODE END
+   37         
+   38         
+   39         //****************************************************************************
+   40         // @Macros
+   41         //****************************************************************************
+   42         
+   43         // USER CODE BEGIN (GPT1_General,3)
+   44         
+   45         // USER CODE END
+   46         
+   47         
+   48         //****************************************************************************
+   49         // @Defines
+   50         //****************************************************************************
+   51         
+   52         // USER CODE BEGIN (GPT1_General,4)
+   53         
+   54         // USER CODE END
+   55         
+C166 COMPILER V7.00, GPT1                                                                  04/01/2020 13:21:47 PAGE 2   
+
+   56         
+   57         //****************************************************************************
+   58         // @Typedefs
+   59         //****************************************************************************
+   60         
+   61         // USER CODE BEGIN (GPT1_General,5)
+   62         
+   63         // USER CODE END
+   64         
+   65         
+   66         //****************************************************************************
+   67         // @Imported Global Variables
+   68         //****************************************************************************
+   69         
+   70         // USER CODE BEGIN (GPT1_General,6)
+   71         
+   72         // USER CODE END
+   73         
+   74         
+   75         //****************************************************************************
+   76         // @Global Variables
+   77         //****************************************************************************
+   78         
+   79         // USER CODE BEGIN (GPT1_General,7)
+   80         
+   81         // USER CODE END
+   82         
+   83         
+   84         //****************************************************************************
+   85         // @External Prototypes
+   86         //****************************************************************************
+   87         
+   88         // USER CODE BEGIN (GPT1_General,8)
+   89         
+   90         // USER CODE END
+   91         
+   92         
+   93         //****************************************************************************
+   94         // @Prototypes Of Local Functions
+   95         //****************************************************************************
+   96         
+   97         // USER CODE BEGIN (GPT1_General,9)
+   98         
+   99         // USER CODE END
+  100         
+  101         
+  102         //****************************************************************************
+  103         // @Function      void GPT1_vInit(void) 
+  104         //
+  105         //----------------------------------------------------------------------------
+  106         // @Description   This is the initialization function of the GPT1 function 
+  107         //                library. It is assumed that the SFRs used by this library 
+  108         //                are in reset state. 
+  109         //
+  110         //----------------------------------------------------------------------------
+  111         // @Returnvalue   None
+  112         //
+  113         //----------------------------------------------------------------------------
+  114         // @Parameters    None
+  115         //
+  116         //----------------------------------------------------------------------------
+  117         // @Date          2020/1/14
+C166 COMPILER V7.00, GPT1                                                                  04/01/2020 13:21:47 PAGE 3   
+
+  118         //
+  119         //****************************************************************************
+  120         
+  121         // USER CODE BEGIN (Init,1)
+  122         
+  123         // USER CODE END
+  124         
+  125         void GPT1_vInit(void)
+  126         {
+  127  1        // USER CODE BEGIN (Init,2)
+  128  1      
+  129  1        // USER CODE END
+  130  1        ///  -----------------------------------------------------------------------
+  131  1        ///  Configuration of Timer Block Prescaler 1:
+  132  1        ///  -----------------------------------------------------------------------
+  133  1        GPT12E_KSCCFG  =  0x0003;      // Module Enable
+  134  1      
+  135  1        _nop_();  // one cycle delay 
+  136  1      
+  137  1        _nop_();  // one cycle delay 
+  138  1      
+  139  1      
+  140  1      
+  141  1        ///  -----------------------------------------------------------------------
+  142  1        ///  Configuration of Timer Block Prescaler 1:
+  143  1        ///  -----------------------------------------------------------------------
+  144  1        ///  - prescaler for timer block 1 is 4
+  145  1      
+  146  1      
+  147  1        ///  -----------------------------------------------------------------------
+  148  1        ///  Configuration of the GPT1 Core Timer 3:
+  149  1        ///  -----------------------------------------------------------------------
+  150  1        ///  - timer 3 works in timer mode
+  151  1        ///  - external up/down control is disabled
+  152  1        ///  - prescaler factor is 32
+  153  1        ///  - up/down control bit is reset
+  154  1        ///  - alternate output function T3OUT (P7.0) is disabled
+  155  1        ///  - timer 3 output toggle latch (T3OTL) is set to 0
+  156  1      
+  157  1        GPT12E_T3CON   =  0x0803;      // load timer 3 control register
+  158  1        GPT12E_T3      =  0x9E58;      // load timer 3 register
+  159  1        ///  - prescaler for timer block 1 is 4
+  160  1      
+  161  1        ///  -----------------------------------------------------------------------
+  162  1        ///  Configuration of the GPT1 Auxiliary Timer 2:
+  163  1        ///  -----------------------------------------------------------------------
+  164  1        ///  - timer 2 works in timer mode
+  165  1        ///  - external up/down control is disabled
+  166  1        ///  - prescaler factor is 8
+  167  1        ///  - up/down control bit is reset
+  168  1      
+  169  1        GPT12E_T2CON   =  0x0001;      // load timer 2 control register
+  170  1        GPT12E_T2      =  0x3CB0;      // load timer 2 register
+  171  1        ///  - prescaler for timer block 1 is 4
+  172  1      
+  173  1        ///  -----------------------------------------------------------------------
+  174  1        ///  Configuration of the GPT1 Auxiliary Timer 4:
+  175  1        ///  -----------------------------------------------------------------------
+  176  1        ///  - timer 4 works in timer mode
+  177  1        ///  - external up/down control is disabled
+  178  1        ///  - prescaler factor is 4
+  179  1        ///  - up/down control bit is reset
+C166 COMPILER V7.00, GPT1                                                                  04/01/2020 13:21:47 PAGE 4   
+
+  180  1        ///  - timer 4 run bit is reset
+  181  1      
+  182  1        GPT12E_T4CON   =  0x0000;      // load timer 4 control register
+  183  1        GPT12E_T4      =  0x0000;      // load timer 4 register
+  184  1        ///  - prescaler for timer block 1 is 4
+  185  1      
+  186  1        ///  -----------------------------------------------------------------------
+  187  1        ///  Configuration of the used GPT1 Port Pins:
+  188  1        ///  -----------------------------------------------------------------------
+  189  1      
+  190  1      
+  191  1      
+  192  1        ///  -----------------------------------------------------------------------
+  193  1        ///  Configuration of the used GPT1 Interrupts:
+  194  1        ///  -----------------------------------------------------------------------
+  195  1        ///  timer 2 service request node configuration:
+  196  1        ///  - timer 2 interrupt priority level (ILVL) = 14
+  197  1        ///  - timer 2 interrupt group level (GLVL) = 0
+  198  1        ///  - timer 2 group priority extension (GPX) = 0
+  199  1      
+  200  1        GPT12E_T2IC    =  0x0078;     
+  201  1      
+  202  1        ///  Use PEC channel 0 for GPT1 T2 INT:
+  203  1        ///  - normal interrupt
+  204  1        ///  - pointers are not modified
+  205  1        ///  - transfer a word
+  206  1        ///  - service End of PEC interrrupt by a EOP interrupt node is disabled
+  207  1        ///  - channel link mode is disabled
+  208  1      
+  209  1        PECC0          =  0x0000;      // load PECC0 control register
+  210  1      
+  211  1      
+  212  1        ///  timer 3 service request node configuration:
+  213  1        ///  - timer 3 interrupt priority level (ILVL) = 13
+  214  1        ///  - timer 3 interrupt group level (GLVL) = 0
+  215  1        ///  - timer 3 group priority extension (GPX) = 0
+  216  1      
+  217  1        GPT12E_T3IC    =  0x0074;     
+  218  1      
+  219  1      
+  220  1        // USER CODE BEGIN (GPT1_Function,3)
+  221  1      
+  222  1        // USER CODE END
+  223  1      
+  224  1        GPT12E_T2CON_T2R  =  1;        // set timer 2 run bit
+  225  1      
+  226  1        GPT12E_T3CON_T3R  =  1;        // set timer 3 run bit
+  227  1      
+  228  1      } //  End of function GPT1_viTmr4
+  229         
+  230         
+  231         //****************************************************************************
+  232         // @Function      void GPT1_viTmr3(void) 
+  233         //
+  234         //----------------------------------------------------------------------------
+  235         // @Description   This is the interrupt service routine for the GPT1 timer 3. 
+  236         //                It is called up in the case of over or underflow of the 
+  237         //                timer 3 register.
+  238         //                If the incremental interface mode is selected it is called 
+  239         //                up if count edge or count direction was detected.
+  240         //                
+  241         //                Please note that you have to add application specific code 
+C166 COMPILER V7.00, GPT1                                                                  04/01/2020 13:21:47 PAGE 5   
+
+  242         //                to this function.
+  243         //
+  244         //----------------------------------------------------------------------------
+  245         // @Returnvalue   None
+  246         //
+  247         //----------------------------------------------------------------------------
+  248         // @Parameters    None
+  249         //
+  250         //----------------------------------------------------------------------------
+  251         // @Date          2020/1/14
+  252         //
+  253         //****************************************************************************
+  254         
+  255         // USER CODE BEGIN (Tmr3,1)
+  256          int ms_100=0,ms_20=0;
+  257         // USER CODE END
+  258         
+  259         void GPT1_viTmr3(void) interrupt T3INT
+  260         {
+  261  1        // USER CODE BEGIN (Tmr3,2)
+  262  1      
+  263  1        // USER CODE END
+  264  1      
+  265  1      
+  266  1        // USER CODE BEGIN (Tmr3,5)
+  267  1      
+  268  1        // USER CODE END
+  269  1      
+  270  1      } //  End of function GPT1_viTmr3
+  271         
+  272         
+  273         //****************************************************************************
+  274         // @Function      void GPT1_viTmr2(void) 
+  275         //
+  276         //----------------------------------------------------------------------------
+  277         // @Description   This is the interrupt service routine for the GPT1 timer 2. 
+  278         //                It is called up in the case of over or underflow of the 
+  279         //                timer 2 register.
+  280         //                If the incremental interface mode is selected and the 
+  281         //                interrupt for this mode is not disabled it is called up if 
+  282         //                count edge or count direction was detected.
+  283         //                
+  284         //                Please note that you have to add application specific code 
+  285         //                to this function.
+  286         //
+  287         //----------------------------------------------------------------------------
+  288         // @Returnvalue   None
+  289         //
+  290         //----------------------------------------------------------------------------
+  291         // @Parameters    None
+  292         //
+  293         //----------------------------------------------------------------------------
+  294         // @Date          2020/1/14
+  295         //
+  296         //****************************************************************************
+  297         
+  298         // USER CODE BEGIN (Tmr2,1)
+  299          extern struct remote_receive remote_re;
+  300          ubyte vehicle_status[8];
+  301          int back_status_time=0;
+  302         // USER CODE END
+  303         
+C166 COMPILER V7.00, GPT1                                                                  04/01/2020 13:21:47 PAGE 6   
+
+  304         void GPT1_viTmr2(void) interrupt T2INT
+  305         {
+  306  1        // USER CODE BEGIN (Tmr2,2)
+  307  1        
+  308  1        //10ms
+  309  1         extern struct error_code vehicle_ec;
+  310  1         extern struct vehicle vehicle_rcv;
+  311  1      //   char vehicle_status[8];
+  312  1         extern int send_cmd_enable;
+  313  1         int error_size=0;
+  314  1         static int count_times;
+  315  1         ms_100++;
+  316  1         ms_20++;
+  317  1         back_status_time++;
+  318  1         //vehicle_control();
+  319  1         if(ms_20>5)  //sent control msg
+  320  1         {
+  321  2                      ms_20 = 0;
+  322  2                      send_cmd_enable = 0;   //debug
+  323  2                      if(send_cmd_enable==0)
+  324  2                              {
+  325  3                                      //send cmd 
+  326  3                                  error_size=vehicle_control();       
+  327  3                              }               
+  328  2                      //      vehicle_control();      
+  329  2         }
+  330  1         if(back_status_time>5)
+  331  1         {
+  332  2                      back_status_time=0;
+  333  2                      //back status 
+  334  2                      vehicle_status[0]=vehicle_rcv.lfw.rpm&0xff;
+*** WARNING C192 IN LINE 334 OF GPT1.C: '=': value truncated
+  335  2                      vehicle_status[1]=vehicle_rcv.lfw.rpm>>8;
+*** WARNING C192 IN LINE 335 OF GPT1.C: '=': value truncated
+  336  2                      vehicle_status[2]=vehicle_rcv.lbw.rpm&0xff;
+*** WARNING C192 IN LINE 336 OF GPT1.C: '=': value truncated
+  337  2                      vehicle_status[3]=vehicle_rcv.lbw.rpm>>8;
+*** WARNING C192 IN LINE 337 OF GPT1.C: '=': value truncated
+  338  2                      vehicle_status[4]=vehicle_rcv.rfw.rpm&0xff;
+*** WARNING C192 IN LINE 338 OF GPT1.C: '=': value truncated
+  339  2                      vehicle_status[5]=vehicle_rcv.rfw.rpm>>8;
+*** WARNING C192 IN LINE 339 OF GPT1.C: '=': value truncated
+  340  2                      vehicle_status[6]=vehicle_rcv.rbw.rpm&0xff;
+*** WARNING C192 IN LINE 340 OF GPT1.C: '=': value truncated
+  341  2                      vehicle_status[7]=vehicle_rcv.rbw.rpm>>8;
+*** WARNING C192 IN LINE 341 OF GPT1.C: '=': value truncated
+  342  2                      CAN_vLoadData(STATUS_196,vehicle_status);
+  343  2                      CAN_vTransmit(STATUS_196);
+  344  2                      delay(500);
+  345  2      
+  346  2                      vehicle_status[0]= vehicle_rcv.front_steering.steering_velaus&0xff;
+*** WARNING C192 IN LINE 346 OF GPT1.C: '=': value truncated
+  347  2                      vehicle_status[1]=vehicle_rcv.front_steering.steering_velaus>>8;
+*** WARNING C192 IN LINE 347 OF GPT1.C: '=': value truncated
+  348  2                      vehicle_status[2]=vehicle_rcv.back_steering.steering_velaus&0xff;
+*** WARNING C192 IN LINE 348 OF GPT1.C: '=': value truncated
+  349  2                      vehicle_status[3]=vehicle_rcv.back_steering.steering_velaus>>8;
+*** WARNING C192 IN LINE 349 OF GPT1.C: '=': value truncated
+  350  2                      vehicle_status[4]=0x00;
+  351  2                      vehicle_status[5]=0x00;
+  352  2                      vehicle_status[6]=0x00;
+  353  2                      vehicle_status[7]=0x00;
+C166 COMPILER V7.00, GPT1                                                                  04/01/2020 13:21:47 PAGE 7   
+
+  354  2      
+  355  2                      CAN_vLoadData(STATUS_197,vehicle_status);
+  356  2                      CAN_vTransmit(STATUS_197);
+  357  2                      delay(500);        
+  358  2         }
+  359  1         
+  360  1         if(ms_100>20)   //sent error code msg 
+  361  1         {
+  362  2                      ms_100=0;
+  363  2                      count_times ++;
+  364  2                      if(count_times >11)count_times =0;
+  365  2                      //send error code don't need cmd enable
+  366  2                      if(error_size==0)
+  367  2                              vehicle_ec.msg_data[0]=0x00;
+  368  2                      else switch(count_times){
+  369  3                              case 1:
+  370  3                                      if(vehicle_ec.remote_error==1)
+  371  3                                              vehicle_ec.msg_data[0]=0x0b;
+  372  3                                      else  vehicle_ec.msg_data[0]=0x00;
+  373  3                              break;
+  374  3                              case 2:
+  375  3                                      if(vehicle_ec.gear_s_error==1)
+  376  3                              vehicle_ec.msg_data[0]=0x0a;
+  377  3                                      else  vehicle_ec.msg_data[0]=0x00;
+  378  3                              break;
+  379  3                              case 3:
+  380  3                                      if(vehicle_ec.mode_s_error==1)
+  381  3                              vehicle_ec.msg_data[0]=0x09;
+  382  3                              else  vehicle_ec.msg_data[0]=0x00;
+  383  3                              break;
+  384  3                              case 4:
+  385  3                                      if(vehicle_ec.break_status==1)
+  386  3                              vehicle_ec.msg_data[0]=0x08;
+  387  3                              else  vehicle_ec.msg_data[0]=0x00;
+  388  3                              break;
+  389  3                              case 5:
+  390  3                                      if(vehicle_ec.rbw_status==1)
+  391  3                              vehicle_ec.msg_data[0]=0x07;
+  392  3                              else  vehicle_ec.msg_data[0]=0x00;
+  393  3                              break;
+  394  3                              case 6:
+  395  3                                      if(vehicle_ec.rfw_status==1)
+  396  3                              vehicle_ec.msg_data[0]=0x06;
+  397  3                              else  vehicle_ec.msg_data[0]=0x00;
+  398  3                              break;
+  399  3                              case 7:
+  400  3                                      if(vehicle_ec.lbw_status==1)
+  401  3                              vehicle_ec.msg_data[0]=0x05;
+  402  3                              else  vehicle_ec.msg_data[0]=0x00;
+  403  3                              break;
+  404  3                              case 8:
+  405  3                                      if(vehicle_ec.lfw_status==1)
+  406  3                              vehicle_ec.msg_data[0]=0x04;
+  407  3                              else  vehicle_ec.msg_data[0]=0x00;
+  408  3                              break;
+  409  3                              case 9:
+  410  3                                      if(vehicle_ec.bs_status==1)
+  411  3                              vehicle_ec.msg_data[0]=0x03;
+  412  3                              else  vehicle_ec.msg_data[0]=0x00;
+  413  3                              break;
+  414  3                              case 10:
+  415  3                                      if(vehicle_ec.fs_status==1)
+C166 COMPILER V7.00, GPT1                                                                  04/01/2020 13:21:47 PAGE 8   
+
+  416  3                              vehicle_ec.msg_data[0]=0x02;
+  417  3                              else  vehicle_ec.msg_data[0]=0x00;
+  418  3                              break;
+  419  3                              case 11:
+  420  3                                      if(vehicle_ec.ess_status==1)
+  421  3                              vehicle_ec.msg_data[0]=0x01;
+  422  3                              else  vehicle_ec.msg_data[0]=0x00;
+  423  3                              break;
+  424  3      
+  425  3                      }       
+  426  2      
+  427  2                      CAN_vLoadData(13,vehicle_ec.msg_data);
+  428  2                      CAN_vTransmit(13);
+  429  2                      delay(500);
+  430  2      
+  431  2         }
+  432  1      
+  433  1      
+  434  1      /*      //柯默电动 10ms中断 主要控制指令发送
+  435  1              T_Mark_i[3]++;  
+  436  1              if(T_Mark_i[3] >= 100){T_Mark_i[3] = 0; T_Mark[3]++;}
+  437  1              if(T_Mark[3]>=100)      T_Mark[3]=0;
+  438  1                                                                                                                                                               
+  439  1         // CAN节点0，MO-发送ID181 M3-接收ID182；波特率250K
+  440  1         // 功能 广播发送CAN_Test,收到信息M3后发送收到的信息
+  441  1              if(CAN_Mark[3]==1)                                                                                                                                               
+  442  1              {
+  443  1                      CAN_vLoadData(0,Data3);         //0为消息序号，Data3为数据地址
+  444  1                      CAN_vTransmit(0);
+  445  1                      delay(500);
+  446  1                      CAN_Mark[3] = 0;
+  447  1          }
+  448  1              else
+  449  1              {
+  450  1                      CAN_vLoadData(0,CAN_Test);              
+  451  1                      CAN_vTransmit(0);
+  452  1                      delay(500);
+  453  1              }
+  454  1      
+  455  1              //节点1:M1-发送ID183 M4-接收ID185;  节点2:M2-发送ID184 M5-接收ID183;波特率250K
+  456  1              //功能 节点1与节点2组成CAN网络，节点1发送报文，节点2接收，节点2接收不到后显示断线故障
+  457  1              CAN_vLoadData(1,CAN_Test);      
+  458  1              CAN_vTransmit(1);
+  459  1              delay(500);
+  460  1              
+  461  1              if(CAN_Mark[5]==1)
+  462  1              {
+  463  1                      CAN_Mark[5] = 0;
+  464  1                      CAN_Break_Timer = 0;
+  465  1                      ST[4]=0xFF;ST[5]=0xFF;ST[6]=0x00;
+  466  1              }
+  467  1              if(CAN_Mark[5]==0)      CAN_Break_Timer ++;
+  468  1      
+  469  1              if(CAN_Break_Timer >= 100)
+  470  1              {
+  471  1                      CAN_Break_Timer = 100;
+  472  1                      CAN_Break_Flag = 1;       
+  473  1              }       
+  474  1                      
+  475  1              else
+  476  1                      CAN_Break_Flag = 0;
+  477  1      
+C166 COMPILER V7.00, GPT1                                                                  04/01/2020 13:21:47 PAGE 9   
+
+  478  1              if(CAN_Break_Flag==1){ST[4]=0x00;ST[5]=0x00;ST[6]=0xFF;}
+  479  1              if(CAN_Break_Flag==0){ST[4]=0xFF;ST[5]=0xFF;ST[6]=0x00;}
+  480  1                                 
+  481  1      
+  482  1        // USER CODE END
+  483  1      
+  484  1      
+  485  1        // USER CODE BEGIN (Tmr2,5)
+  486  1       */
+  487  1         // 柯默电动 设置寄存器
+  488  1         GPT12E_T3=0x9E58;                    
+  489  1      
+  490  1        // USER CODE END
+  491  1      
+  492  1      } //  End of function GPT1_viTmr2
+  493         
+  494         
+  495         
+  496         
+  497         // USER CODE BEGIN (GPT1_General,10)
+  498         
+  499         // USER CODE END
+  500         
+
+
+MODULE INFORMATION:   INITIALIZED  UNINITIALIZED
+  CODE SIZE        =         762     --------
+  NEAR-CONST SIZE  =    --------     --------
+  FAR-CONST SIZE   =    --------     --------
+  HUGE-CONST SIZE  =    --------     --------
+  XHUGE-CONST SIZE =    --------     --------
+  NEAR-DATA SIZE   =          16     --------
+  FAR-DATA SIZE    =    --------     --------
+  XHUGE-DATA SIZE  =    --------     --------
+  IDATA-DATA SIZE  =    --------     --------
+  SDATA-DATA SIZE  =    --------     --------
+  BDATA-DATA SIZE  =    --------     --------
+  HUGE-DATA SIZE   =    --------     --------
+  BIT SIZE         =    --------     --------
+  INIT'L SIZE      =          18     --------
+END OF MODULE INFORMATION.
+
+
+C166 COMPILATION COMPLETE.  12 WARNING(S),  0 ERROR(S)
