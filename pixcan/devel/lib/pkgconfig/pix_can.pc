@@ -1,0 +1,8 @@
+prefix=/home/nvidia/pixcan/devel
+
+Name: pix_can
+Description: Description of pix_can
+Version: 0.0.1
+Cflags: -I/home/nvidia/pixcan/devel/include -I/home/nvidia/pixcan/src/pix_can/include
+Libs: -L${prefix}/lib 
+Requires: roscpp message_runtime std_msgs tf tf2 geometry_msgs autoware_msgs autoware_can_msgs autoware_config_msgs amathutils_lib pcl_ros pcl_conversions sensor_msgs tablet_socket_msgs autoware_health_checker gazebo_msgs libwaypoint_follower astar_search
