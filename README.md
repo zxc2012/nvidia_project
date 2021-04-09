@@ -7,3 +7,6 @@
 - pixcan:
 
 - catkin_ws: ROS
+
+- geo_pos
+
