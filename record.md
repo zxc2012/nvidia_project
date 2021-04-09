@@ -1,19 +1,21 @@
-1.install ros1
+## 1.install ros1
 
 Setup your computer to accept software from packages.ros.org.
+
 $ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 
 Set up your keys
+
 $ sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key  C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 
-Installation
+### Installation
 First, make sure your Debian package index is up-to-date:
 $ sudo apt update
 
 Desktop-Full Install: (Recommended) : ROS, rqt, rviz, robot-generic libraries, 2D/3D simulators and 2D/3D perception
 $ sudo apt install ros-melodic-desktop-full
 
-Environment setup
+### Environment setup
 It's convenient if the ROS environment variables are automatically added to your bash session every time a new shell is launched:
 $ echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 $ source ~/.bashrc
@@ -21,12 +23,13 @@ $ source ~/.bashrc
 To install this tool and other dependencies for building ROS packages, run:
 $ sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential
 
-Initialize rosdep
+### Initialize rosdep
 $ sudo apt install python-rosdep
 $ sudo rosdep init
 $ rosdep update
 
-2.install autoware
+## 2.install autoware
+
 System dependencies for Ubuntu 18.04 / Melodic
 $ sudo apt update
 $ sudo apt install -y python-catkin-pkg python-rosdep ros-$ROS_DISTRO-catkin
@@ -97,11 +100,11 @@ delete the last line  <!--node name="rviz" pkg="rviz" type="rviz" args="-d $(fin
 $ vim /home/nvidia/catkin_ws/src/ros_rslidar-master/rslidar_pointcloud/launch/rs_lidar_16.launch
 delete the last line  <node name="rviz" pkg="rviz" type="rviz"  args="-d $(find rslidar_pointcloud)/rviz_cfg/rslidar.rviz" />
 
-3.$ sudo apt-get install python-catkin-tools
+## 3.$ sudo apt-get install python-catkin-tools
 
-4.install spinnaker SDK (Packages/spinnaker-2.0.0.147-arm64-pkg)
+## 4.install spinnaker SDK (Packages/spinnaker-2.0.0.147-arm64-pkg)
 
-5.catkin_ws(/src/lslidar_C16-master ros_rslidar-master spinnaker_sdk_camera_driver-master velodyne-master)
+## 5.catkin_ws(/src/lslidar_C16-master ros_rslidar-master spinnaker_sdk_camera_driver-master velodyne-master)
 https://github.com/tongsky723/lslidar_C16
 https://github.com/RoboSense-LiDAR/ros_rslidar
 http://wiki.ros.org/spinnaker_sdk_camera_driver
@@ -117,30 +120,30 @@ private_nh.param("output_points_topic", output_points_topic, std::string("points
 vim /home/nvidia/catkin_ws/src/lslidar_C16-master/lslidar_c16_decoder/src/lslidar_c16_decoder.cpp
 point_cloud_pub = nh.advertise<sensor_msgs::PointCloud2>("points_raw", 10);//lslidar_point_cloud
 
-6.install Opencv3.4(ncnynl.com/archives/201903/2899.html)
+## 6.install Opencv3.4(ncnynl.com/archives/201903/2899.html)
 
-7.compile autoware
+## 7.compile autoware
 Compile the workspace With CUDA support
 $ AUTOWARE_COMPILE_WITH_CUDA=1 colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 Compile the workspace Without CUDA Support
 $ colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
 
-8.install peak_can driver(peak-system.com/fileadmin/media/linux/index.htm#)
+## 8.install peak_can driver(peak-system.com/fileadmin/media/linux/index.htm#)
 $ vim /home/nvidia/Packages/peak-linux-driver-8.10.1/driver/Makefile
 KERNEL_LOCATION =/lib/modules/4.9.108-tegra/build
 KERNEL_LOCATION =/lib/modules/4.9.140-tegra/build
 
-9.install pcan_basic
+## 9.install pcan_basic
 
-10.make the tf files for lidars
+## 10.make the tf files for lidars
 
-11.nvidia mode check and set
+## 11.nvidia mode check and set
 $ sudo nvpmodel -m 0
 $ sudo /usr/bin/./jetson_clocks --show
 $ sudo nvpmodel -q --verbose
 
-12.Mount new disk(blog.csdn.net/DraemSky/article/details/85280522)
+## 12.Mount new disk(blog.csdn.net/DraemSky/article/details/85280522)
 
 sudo apt install qt5-default
 
