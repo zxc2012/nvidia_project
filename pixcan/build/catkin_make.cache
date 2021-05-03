@@ -1,2 +1,0 @@
-pix_can
--DCATKIN_DEVEL_PREFIX=/home/nvidia/pixcan/devel -DCMAKE_INSTALL_PREFIX=/home/nvidia/pixcan/install -G Unix Makefiles
