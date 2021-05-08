@@ -1,7 +1,0 @@
-<launch>
-
-	<node pkg="pix_can" type="pix_can_write" name="pix_can_write" output="screen">
-
-	</node>
-
-</launch>

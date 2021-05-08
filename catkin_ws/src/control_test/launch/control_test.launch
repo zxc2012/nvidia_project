@@ -1,0 +1,9 @@
+<launch>
+
+    <arg name="project" default="control_test"/>
+
+    <node pkg="$(arg project)" type="control_test"  name="control_test"    output="screen" 	respawn="true"/>
+
+    <node pkg="$(arg project)" type="teleop_twist_keyboard_class.py" name="teleop_twist_keyboard" output="screen" respawn="true"/>
+
+</launch>
