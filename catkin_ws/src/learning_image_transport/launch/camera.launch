@@ -1,0 +1,6 @@
+<launch> 
+    <node name="image_publisher" pkg="learning_image_transport" type="my_publisher" args="0"/>  
+    <!-- Launch image converter node -->
+    <node name="image_listener" pkg="learning_image_transport" type="my_subscriber" output="screen"/>
+</launch>
+`

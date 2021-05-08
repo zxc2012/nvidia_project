@@ -5,10 +5,12 @@
 
 void imageCallback(const sensor_msgs::ImageConstPtr& msg)  
 {  
+	cv::Mat src;
 	try  
 	{  
-		cv::imshow("view", cv_bridge::toCvShare(msg, "bgr8")->image); 
-		// cv::waitKey(30);  
+		src=cv_bridge::toCvShare(msg, "bgr8")->image;
+		cv::imshow("view", src);
+		cv::waitKey(5);  
 	}  
 	catch (cv_bridge::Exception& e)  
 	{  
