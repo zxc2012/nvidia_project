@@ -6,7 +6,8 @@
 - catkin_ws: ROS
     - camera
     - velodyne
-    - pixcan: 底层控制
+    - control_test
+    - lio_sam: map
 - geo_pos
 
 - **record**: 学长之前的记录&我们的记录
