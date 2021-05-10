@@ -1,0 +1,1 @@
+roslaunch learning_image_transport camera.launch debug:=1
