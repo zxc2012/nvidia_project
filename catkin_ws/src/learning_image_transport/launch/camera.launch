@@ -1,7 +1,7 @@
 <launch>
     <group if="$(arg debug)">
     <node name="my_publisher" pkg="learning_image_transport" type="my_publisher.py"/>  
-    <node name="my_subsriber" pkg="learning_image_transport" type="my_subsriber.py" output="screen"/>
+    <node name="my_subscriber" pkg="learning_image_transport" type="my_subscriber.py" output="screen"/>
     </group>
     <!--Video get mode-->
     <node name="video_get" pkg="learning_image_transport" type="video_get.py" cwd="node" unless="$(arg debug)"/>

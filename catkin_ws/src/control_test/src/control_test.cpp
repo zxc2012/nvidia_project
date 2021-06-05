@@ -45,7 +45,7 @@ void cmdVelHandler(const geometry_msgs::TwistConstPtr& twistin){
     double vel_real = steer_degree *(1024/30);
     int vel_steering = vel_real;
     //汽车速度
-    int vel_speed=(int)(speed_ms*3600/1000*10);
+    int vel_speed=(int)(speed_ms*3600/1000*10);// 10*m/s
     if(vel_speed>600){
         vel_speed=600;
     }else if(vel_speed<-600){
