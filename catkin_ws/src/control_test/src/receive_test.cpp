@@ -28,7 +28,6 @@ std::mutex mtx; // 互斥锁
 VCI_INIT_CONFIG config;
 VCI_CAN_OBJ message[1];
 double angular =0.0;
-
 void cmdVelHandler(const geometry_msgs::TwistConstPtr& twistin){
     angular =twistin->angular.z;
     if(angular<0.5&&angular>-0.5)
@@ -60,12 +59,11 @@ void cmdVelHandler(const geometry_msgs::TwistConstPtr& twistin){
     }else if(vel_speed<-600){
         vel_speed=-600;
     }
-    cout << endl;
     cout<<"转角："<<steer_degree<<" 度"<<"  速度："<<speed_ms<<" m/s"<<endl;
     if(vel_speed<0){
         vel_steering = -vel_steering;
     }
-    send_out(vel_speed,vel_steering);
+    //send_out(vel_speed,vel_steering);
 }
 
 void send_out(int t_speed,int t_steering){
@@ -100,16 +98,43 @@ void send_out(int t_speed,int t_steering){
 
 void pubCANThread()
 {
+    int reclen=0;
+	VCI_CAN_OBJ rec[3000];//接收缓存，设为3000为佳。
+         streambuf* coutBuf = cout.rdbuf();
+ 
+    ofstream of("~/ycy.txt");
+    // 获取文件out.txt流缓冲区指针
+     streambuf* fileBuf = of.rdbuf();
+    
+    // 设置cout流缓冲区指针为out.txt的流缓冲区指针
+     cout.rdbuf(fileBuf);
     while(ros::ok()){
-        VCI_Transmit(VCI_USBCAN2, 0, 0, message, 1);
+		if((reclen=VCI_Receive(VCI_USBCAN2,0,0,rec,3000,100))>0)//调用接收函数，如果有数据，进行数据处理显示。
+		{
+			for(int j=0;j<reclen;j++)
+			{
+				
+				if(rec[j].ID==0x193){
+					signed short t_speed=(signed short) (rec[j].Data[1]<<8|(rec[j].Data[0]&0x0f));
+					signed short t_steering=(signed short)(rec[j].Data[3]<<8|(rec[j].Data[2]&0x0f));
+					cout<<"Turn"<<t_steering<<"\tspeed"<<t_speed<<endl;
+
+				}
+			}
+		}
 		usleep(20000);//延时20ms。
     }
+        of.flush();
+    of.close();
+ 
+    // 恢复cout原来的流缓冲区指针
+     cout.rdbuf(coutBuf);
     return;
 }
 
 
 int main(int argc, char** argv){
-    ros::init(argc, argv, "control_test");
+    ros::init(argc, argv, "receive_test");
     ros::NodeHandle nh;
     
     subCmdVel = nh.subscribe<geometry_msgs::Twist>("/cmd_vel",1,&cmdVelHandler);
@@ -157,6 +182,5 @@ int main(int argc, char** argv){
     ros::spin();
 
     pubCANthread.join();
-
     return 0;
 }

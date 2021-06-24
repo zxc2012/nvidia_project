@@ -219,3 +219,17 @@ add_dependencies(control_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPOR
 target_link_libraries(control_test
   ${catkin_LIBRARIES} controlcan
 )
+add_executable(receive_test
+  src/receive_test.cpp
+)
+add_dependencies(receive_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(receive_test
+  ${catkin_LIBRARIES} controlcan
+)
+add_executable(send_test
+  src/send_test.cpp
+)
+add_dependencies(send_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(send_test
+  ${catkin_LIBRARIES} controlcan
+)

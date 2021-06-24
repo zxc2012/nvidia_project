@@ -1,0 +1,8 @@
+<launch>
+
+    <arg name="project" default="control_test"/>
+    <group if="$(arg debug)">
+        <node pkg="$(arg project)" type="receive_test"  name="receive_test"    output="log" 	respawn="true"/>
+    </group>
+    <node pkg="$(arg project)" type="send_test"  name="send_test"    output="screen" 	respawn="true" unless="$(arg debug)"/>
+</launch>

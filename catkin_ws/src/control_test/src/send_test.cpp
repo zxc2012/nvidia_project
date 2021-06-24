@@ -28,7 +28,6 @@ std::mutex mtx; // 互斥锁
 VCI_INIT_CONFIG config;
 VCI_CAN_OBJ message[1];
 double angular =0.0;
-
 void cmdVelHandler(const geometry_msgs::TwistConstPtr& twistin){
     angular =twistin->angular.z;
     if(angular<0.5&&angular>-0.5)
@@ -100,16 +99,24 @@ void send_out(int t_speed,int t_steering){
 
 void pubCANThread()
 {
+    int reclen=0;
+
+    ifstream myfile("~/ycy.txt"); 
     while(ros::ok()){
-        VCI_Transmit(VCI_USBCAN2, 0, 0, message, 1);
+        getline(myfile,temp);
+        string temp;
+        char* tmpStr = strtok(temp, '\t');
+        send_out(tmpStr[1],tmpStr[0]);
+		VCI_Transmit(VCI_USBCAN2, 0, 0, message, 1);
 		usleep(20000);//延时20ms。
     }
+    myfile.close(); 
     return;
 }
 
 
 int main(int argc, char** argv){
-    ros::init(argc, argv, "control_test");
+    ros::init(argc, argv, "send_test");
     ros::NodeHandle nh;
     
     subCmdVel = nh.subscribe<geometry_msgs::Twist>("/cmd_vel",1,&cmdVelHandler);
@@ -157,6 +164,5 @@ int main(int argc, char** argv){
     ros::spin();
 
     pubCANthread.join();
-
     return 0;
 }
